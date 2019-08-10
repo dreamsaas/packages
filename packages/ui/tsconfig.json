@@ -1,0 +1,11 @@
+{
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./lib",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"strictNullChecks": false
+	},
+	"include": [".src/**/*", "./assets"],
+	"exclude": ["../(?!ui)"]
+}

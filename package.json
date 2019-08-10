@@ -1,0 +1,23 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "tsc": "npm run rm:lib && lerna run tsc",
+    "tsc:watch": "npm run rm:lib && lerna run tsc:watch",
+    "test": "jest --verbose",
+    "test:watch": "npm run jest -- --watch",
+    "rm:lib": "rimraf packages/*/lib"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "lerna": "^3.13.4",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.12",
+    "@types/node": "^12.0.0",
+    "rimraf": "^2.6.3",
+    "ts-node": "^8.1.0"
+  }
+}

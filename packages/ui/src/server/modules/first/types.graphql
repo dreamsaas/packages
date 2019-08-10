@@ -1,0 +1,43 @@
+type AdminSection {
+	id: String
+	heading: String
+	description: String
+	settings: [String]
+}
+
+type Link {
+	text: String
+	pageName: String
+}
+
+type AdminPage {
+	id: String
+	heading: String
+	description: String
+	settings: [String]
+}
+
+type PluginSettingsUI {
+	sidebar: [Link]
+	pages: [AdminPage]
+	sections: [AdminSection]
+}
+
+type Query {
+	config: String
+	plugins: [String]
+	hooks: [String]
+	actions: [String]
+	services: [String]
+}
+
+type Mutation {
+	startServer: Boolean
+	stopServer: Boolean
+	watch: Boolean
+}
+
+type Subscription {
+	hooksChanged: [String]
+	uiSettingsChanged: PluginSettingsUI
+}

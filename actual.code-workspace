@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "path": "./packages/docs"
+    },
+    {
+      "path": "./packages/core"
+    },
+    {
+      "path": "./packages/fastify"
+    },
+    {
+      "path": "./packages/model"
+    },
+    {
+      "path": "./packages/ui"
+    },
+    {
+      "path": "./packages/ui-client"
+    }
+  ],
+  "settings": {
+    "workbench.colorCustomizations": {},
+    "jest.pathToJest": "npm test --",
+    "editor.formatOnSave": true
+  }
+}
