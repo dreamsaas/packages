@@ -1,46 +1,52 @@
-import {Service} from 'dreamsaas'
+import { Service } from '@dreamsaas/types'
 
 export interface ContainerOptions {
-  id: string
+	id: string
 }
 
 export class Container {
-  public id: string
-  private services = []
+	public id: string
+	private services = []
 
-  constructor({ id }: ContainerOptions) {
-    if (!id) throw new Error('Containers must have a id')
-    
-    this.id = id
-  }
+	constructor({ id }: ContainerOptions) {
+		if (!id) throw new Error('Containers must have a id')
 
-  /**
-   * Retrieve list of services from the container
-   */
-  getServices() {
-    return this.services
-  }
+		this.id = id
+	}
 
-  /**
-   * Retrieve a specific service by id
-   */
-  getService<T extends Service>(id: string):T {
-    return this.services.find(service => service.id === id)
-  }
+	/**
+	 * Retrieve list of services from the container
+	 */
+	getServices() {
+		return this.services
+	}
 
-  /**
-   * Add a service to the services list.
-   * If the service is a class, it must be instantiated first `new YourService()`
-   */
-  addService(service: Service) {
-    if(!service.id)
-      throw new Error(`A service must contain an id(string) property: ${JSON.stringify(service)}`)
+	/**
+	 * Retrieve a specific service by id
+	 */
+	getService<T extends Service>(id: string): T {
+		return this.services.find(service => service.id === id)
+	}
 
-    if (this.getService(service.id))
-      throw new Error(`Containers cannot accept services with duplicate ids: ${service.id}`)
+	/**
+	 * Add a service to the services list.
+	 * If the service is a class, it must be instantiated first `new YourService()`
+	 */
+	addService(service: Service) {
+		if (!service.id)
+			throw new Error(
+				`A service must contain an id(string) property: ${JSON.stringify(
+					service
+				)}`
+			)
 
-    this.services = this.services.concat(service)
+		if (this.getService(service.id))
+			throw new Error(
+				`Containers cannot accept services with duplicate ids: ${service.id}`
+			)
 
-    return service
-  }
+		this.services = this.services.concat(service)
+
+		return service
+	}
 }

@@ -1,6 +1,9 @@
 {
   "folders": [
     {
+      "path": "./packages/types"
+    },
+    {
       "path": "./packages/docs"
     },
     {

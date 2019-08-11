@@ -1,50 +1,50 @@
-import { LogOptions, Plugin, Server } from "dreamsaas";
+import { LogOptions, Plugin, Server } from '@dreamsaas/types'
 export const hooks = {
-    BEFORE_LOG:'BEFORE_LOG',
-    LOG:'LOG',
-    AFTER_LOG:'AFTER_LOG'
+	BEFORE_LOG: 'BEFORE_LOG',
+	LOG: 'LOG',
+	AFTER_LOG: 'AFTER_LOG'
 }
 
 export default class LoggablePlugin implements Plugin {
-    id = 'loggable'
-    
-    hooks = hooks
+	id = 'loggable'
 
-    created(server:Server, options){
-        if(!server.config.logLevel){
-            server.config.logLevel = 'error'
-        }
+	hooks = hooks
 
-        server.log = async (logOptions: LogOptions)=>{
-            let result = await server.hooks.runHook(hooks.BEFORE_LOG, logOptions)
-            result = await server.hooks.runHook(hooks.LOG, result)
-            result = await server.hooks.runHook(hooks.AFTER_LOG, result)
+	created(server: Server, options) {
+		if (!server.config.logLevel) {
+			server.config.logLevel = 'error'
+		}
 
-            return result
-        } 
+		server.log = async (logOptions: LogOptions) => {
+			let result = await server.hooks.runHook(hooks.BEFORE_LOG, logOptions)
+			result = await server.hooks.runHook(hooks.LOG, result)
+			result = await server.hooks.runHook(hooks.AFTER_LOG, result)
 
-        server.hooks.addHookAction(hooks.LOG,{
-            id:'default-log-action',
-            handler(log:LogOptions, server){
-                if(log.type === 'error'){
-                    console.error(log.message, log.context)
-                }
-                if(server.config.logLevel === 'error') return
-                
-                if(log.type === 'warn'){
-                    console.warn(log.message, log.context)
-                }
-                if(server.config.logLevel === 'warn') return
+			return result
+		}
 
-                if(log.type === 'info'){
-                    console.log(log.message, log.context)
-                }
-                if(server.config.logLevel === 'info') return
-                
-                if(log.type === 'debug'){
-                    console.log(log.message, JSON.stringify(log.context, null, 4))
-                }
-            }
-        })
-    }
+		server.hooks.addHookAction(hooks.LOG, {
+			id: 'default-log-action',
+			handler(log: LogOptions, server) {
+				if (log.type === 'error') {
+					console.error(log.message, log.context)
+				}
+				if (server.config.logLevel === 'error') return
+
+				if (log.type === 'warn') {
+					console.warn(log.message, log.context)
+				}
+				if (server.config.logLevel === 'warn') return
+
+				if (log.type === 'info') {
+					console.log(log.message, log.context)
+				}
+				if (server.config.logLevel === 'info') return
+
+				if (log.type === 'debug') {
+					console.log(log.message, JSON.stringify(log.context, null, 4))
+				}
+			}
+		})
+	}
 }

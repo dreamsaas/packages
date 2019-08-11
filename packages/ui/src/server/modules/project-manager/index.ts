@@ -1,4 +1,4 @@
-import { Server } from '../../../types/index'
+import { Server } from '@dreamsaas/core'
 
 import chokidar from 'chokidar'
 

@@ -1,16 +1,15 @@
-import { Plugin, Server } from "dreamsaas";
-import { ContainerService } from "./container-service";
+import { Plugin, Server } from '@dreamsaas/types'
+import { ContainerService } from './container-service'
 
+export class ServicesPlugin implements Plugin {
+	public id = 'services'
 
-export class ServicesPlugin implements Plugin{
-    public id = 'services'
+	containerService: ContainerService
 
-    containerService: ContainerService;
-
-    created(server: Server){
-      server.containerService = new ContainerService()
-      server.services = server.containerService.addContainer({
-            id: 'services'
-          })
-    }
-  }
+	created(server: Server) {
+		server.containerService = new ContainerService()
+		server.services = server.containerService.addContainer({
+			id: 'services'
+		})
+	}
+}

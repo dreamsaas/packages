@@ -1,8 +1,7 @@
-import FastifyPlugin from '@actual/fastify'
-import {createServer} from '@actual/core'
+// import FastifyPlugin from '@dreamsaas/fastify'
+// import { createServer } from '@dreamsaas/core'
 
-const run = async ()=>{
-    const server = await createServer({})
-    server.use(new FastifyPlugin())
-}
-
+// const run = async () => {
+// 	const server = await createServer({})
+// 	server.use(new FastifyPlugin())
+// }

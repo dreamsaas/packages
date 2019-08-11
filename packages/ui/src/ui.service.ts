@@ -1,5 +1,5 @@
 import merge from 'deepmerge'
-import { Plugin, Server, ActionSettingsUI, Service } from './types/index'
+import { Plugin, Server, ActionSettingsUI, Service } from '@dreamsaas/types'
 // import { Service, Server,ActionSettingsUI } from "dreamsaass";
 
 export class UIService implements Service {

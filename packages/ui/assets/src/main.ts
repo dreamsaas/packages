@@ -1,4 +1,4 @@
-import { createServer } from '@actual/core'
+import { createServer } from '@dreamsaas/core'
 
 import UIPlugin from '../../src/ui'
 

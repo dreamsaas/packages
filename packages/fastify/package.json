@@ -1,39 +1,40 @@
 {
-  "name": "@actual/fastify",
-  "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "Harry Horton <n0vat3k@gmail.com>",
-  "homepage": "https://github.com/actualsaas/playground#readme",
-  "license": "ISC",
-  "main": "lib/fastify.js",
-  "types": "lib/fastify.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actualsaas/playground.git"
-  },
-  "scripts": {
-    "_tsc": "tsc",
-    "tsc:watch": "tsc -w",
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "bugs": {
-    "url": "https://github.com/actualsaas/playground/issues"
-  },
-  "dependencies": {
-    "@actual/core": "^0.0.0",
-    "@types/jest": "^24.0.12",
-    "@types/node": "^12.0.0",
-    "fastify": "^2.3.0",
-    "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.1.0",
-    "typescript": "^3.4.5"
-  }
+	"name": "@dreamsaas/fastify",
+	"version": "0.0.0",
+	"description": "> TODO: description",
+	"author": "Harry Horton <n0vat3k@gmail.com>",
+	"homepage": "https://github.com/dreamsaassaas/playground#readme",
+	"license": "ISC",
+	"main": "lib/fastify.js",
+	"types": "lib/fastify.d.ts",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dreamsaassaas/playground.git"
+	},
+	"scripts": {
+		"_tsc": "tsc",
+		"tsc:watch": "tsc -w",
+		"test": "echo \"Error: run tests from root\" && exit 1"
+	},
+	"bugs": {
+		"url": "https://github.com/dreamsaassaas/playground/issues"
+	},
+	"dependencies": {
+		"@dreamsaas/core": "^0.0.0",
+		"@dreamsaas/types": "^1.0.0",
+		"@types/jest": "^24.0.12",
+		"@types/node": "^12.0.0",
+		"fastify": "^2.3.0",
+		"jest": "^24.8.0",
+		"ts-jest": "^24.0.2",
+		"ts-node": "^8.1.0",
+		"typescript": "^3.4.5"
+	}
 }

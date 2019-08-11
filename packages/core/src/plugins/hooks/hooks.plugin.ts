@@ -1,58 +1,58 @@
-import { Plugin, Server } from "dreamsaas";
-import { HookService } from "./hook-service";
-import { hooksGenerator } from "./hooks.generator";
-import { objectExpression } from "@babel/types";
+import { Plugin, Server } from '@dreamsaas/core'
+import { HookService } from './hook-service'
+import { hooksGenerator } from './hooks.generator'
+import { objectExpression } from '@babel/types'
 
-export class HooksPlugin implements Plugin{
-    public id = 'hooks'
-    
-    async created(server: Server){
-        const hooks = new HookService({ server })
-        server.services.addService(hooks)
-        server.hooks = hooks
+export class HooksPlugin implements Plugin {
+	public id = 'hooks'
 
-        await this.extendServerUse(server)
+	async created(server: Server) {
+		const hooks = new HookService({ server })
+		server.services.addService(hooks)
+		server.hooks = hooks
 
-        this.loadHooksFromConfig(server)
-    }
+		await this.extendServerUse(server)
 
-    /**
-     * Wraps the original `server.use()` function with one that adds the hooks.
-     * If a plugin is unable to be added via the original function, an exception is
-     * thrown and the server creation fails, so, no need to care if hooks are added
-     * for a plugin that doesn't get registered.
-     */
-    extendServerUse(server:Server){
-        const coreUseFunction = server.use.bind(server)
-        server.use = async (plugin:Plugin, options:{})=>{
-            if(plugin.hooks){
-                for(let key in plugin.hooks){
-                    server.hooks.addHook({id:plugin.hooks[key]})
-                }
-            }
+		this.loadHooksFromConfig(server)
+	}
 
-            await coreUseFunction(plugin, options)
-        }
-    }
+	/**
+	 * Wraps the original `server.use()` function with one that adds the hooks.
+	 * If a plugin is unable to be added via the original function, an exception is
+	 * thrown and the server creation fails, so, no need to care if hooks are added
+	 * for a plugin that doesn't get registered.
+	 */
+	extendServerUse(server: Server) {
+		const coreUseFunction = server.use.bind(server)
+		server.use = async (plugin: Plugin, options: {}) => {
+			if (plugin.hooks) {
+				for (let key in plugin.hooks) {
+					server.hooks.addHook({ id: plugin.hooks[key] })
+				}
+			}
 
-    /**
-     * Loads all config defined hooks and hookActions into hooks and registers
-     * their actions.
-     * 
-     * NOTE: This being done here loads configurations before programmatically
-     * added hooks. This will also prevent actions from being automatically added
-     * if a hook is attempted to be created with actions programmatically. Consider
-     * merging existing actions if they exist.
-     */
-    loadHooksFromConfig(server:Server){
-        const config = server.config
-        if(typeof config.hooks !== 'object') return
+			await coreUseFunction(plugin, options)
+		}
+	}
 
-        for(let hookId in config.hooks){
-            const actions = config.hooks[hookId].actions || []
-            server.hooks.addHook({id:hookId,actions})
-        }
-    }
+	/**
+	 * Loads all config defined hooks and hookActions into hooks and registers
+	 * their actions.
+	 *
+	 * NOTE: This being done here loads configurations before programmatically
+	 * added hooks. This will also prevent actions from being automatically added
+	 * if a hook is attempted to be created with actions programmatically. Consider
+	 * merging existing actions if they exist.
+	 */
+	loadHooksFromConfig(server: Server) {
+		const config = server.config
+		if (typeof config.hooks !== 'object') return
 
-    public hooksGenerator = hooksGenerator
-  }
+		for (let hookId in config.hooks) {
+			const actions = config.hooks[hookId].actions || []
+			server.hooks.addHook({ id: hookId, actions })
+		}
+	}
+
+	public hooksGenerator = hooksGenerator
+}

@@ -7,7 +7,7 @@
 ```
 npm -g i ui
 
-actual --help
+dreamsaas --help
 
 // TODO: DEMONSTRATE API
 ```

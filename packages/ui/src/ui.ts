@@ -1,6 +1,6 @@
-import '@actual/core'
+import '@dreamsaas/types'
 import { UIService } from './ui.service'
-import { Plugin, Server } from './types/index'
+import { Plugin, Server } from '@dreamsaas/types'
 export default class UIPlugin implements Plugin {
 	id = 'ui'
 	settingsUI = {

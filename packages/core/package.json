@@ -1,45 +1,45 @@
 {
-  "name": "@actual/core",
-  "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "Harry Horton <n0vat3k@gmail.com>",
-  "homepage": "https://github.com/actualsaas/playground#readme",
-  "license": "ISC",
-  "main": "lib/core.js",
-  "types": "lib/types/index.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/actualsaas/playground.git"
-  },
-  "scripts": {
-    "tsc": "rimraf ./lib && tsc && cpy ./src/types ./lib/types",
-    "tsc:watch": "tsc -w"
-  },
-  "bugs": {
-    "url": "https://github.com/actualsaas/playground/issues"
-  },
-  "dependencies": {
-    "@babel/parser": "^7.5.0",
-    "@babel/types": "^7.5.0",
-    "@types/node": "^12.0.0",
-    "@types/ramda": "github:types/npm-ramda#dist",
-    "fastify": "^2.3.0",
-    "jest": "^24.8.0",
-    "rambda": "^2.11.1",
-    "rimraf": "^2.6.3",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.1.0",
-    "typeorm": "^0.2.17",
-    "typescript": "^3.4.5"
-  },
-  "devDependencies": {
-    "cpy-cli": "^2.0.0"
-  }
+	"name": "@dreamsaas/core",
+	"version": "0.0.0",
+	"description": "> TODO: description",
+	"author": "Harry Horton <n0vat3k@gmail.com>",
+	"homepage": "https://github.com/dreamsaas/playground#readme",
+	"license": "ISC",
+	"main": "src/core.ts",
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dreamsaas/playground.git"
+	},
+	"scripts": {
+		"tsc": "rimraf ./lib && tsc && cpy ./src/types ./lib/types",
+		"tsc:watch": "tsc -w"
+	},
+	"bugs": {
+		"url": "https://github.com/dreamsaas/playground/issues"
+	},
+	"dependencies": {
+		"@babel/parser": "^7.5.0",
+		"@babel/types": "^7.5.0",
+		"@types/node": "^12.0.0",
+		"@types/ramda": "github:types/npm-ramda#dist",
+		"fastify": "^2.3.0",
+		"jest": "^24.8.0",
+		"rambda": "^2.11.1",
+		"rimraf": "^2.6.3",
+		"ts-jest": "^24.0.2",
+		"ts-node": "^8.1.0",
+		"typeorm": "^0.2.17",
+		"typescript": "^3.4.5",
+		"@dreamsaas/types": "1.0.0"
+	},
+	"devDependencies": {
+		"cpy-cli": "^2.0.0"
+	}
 }

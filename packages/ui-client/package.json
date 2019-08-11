@@ -1,40 +1,40 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "apollo-cache-inmemory": "^1.6.2",
-    "apollo-client": "^2.6.3",
-    "apollo-link": "^1.2.12",
-    "apollo-link-http": "^1.5.15",
-    "apollo-link-ws": "^1.0.18",
-    "core-js": "^2.6.5",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
-    "subscriptions-transport-ws": "^0.9.16",
-    "tailwindcss": "^1.0.5",
-    "vue": "^2.6.10",
-    "vue-apollo": "^3.0.0-rc.2",
-    "vue-router": "^3.0.3",
-    "vuex": "^3.0.1"
-  },
-  "devDependencies": {
-    "@actual/ui": "0.0.0",
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-plugin-typescript": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
-    "@vue/eslint-config-typescript": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "typescript": "^3.4.3",
-    "vue-template-compiler": "^2.5.21"
-  }
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
+	},
+	"dependencies": {
+		"apollo-cache-inmemory": "^1.6.2",
+		"apollo-client": "^2.6.3",
+		"apollo-link": "^1.2.12",
+		"apollo-link-http": "^1.5.15",
+		"apollo-link-ws": "^1.0.18",
+		"core-js": "^2.6.5",
+		"graphql": "^14.4.2",
+		"graphql-tag": "^2.10.1",
+		"subscriptions-transport-ws": "^0.9.16",
+		"tailwindcss": "^1.0.5",
+		"vue": "^2.6.10",
+		"vue-apollo": "^3.0.0-rc.2",
+		"vue-router": "^3.0.3",
+		"vuex": "^3.0.1"
+	},
+	"devDependencies": {
+		"@dreamsaas/ui": "0.0.0",
+		"@vue/cli-plugin-babel": "^3.7.0",
+		"@vue/cli-plugin-eslint": "^3.7.0",
+		"@vue/cli-plugin-typescript": "^3.7.0",
+		"@vue/cli-service": "^3.7.0",
+		"@vue/eslint-config-prettier": "^4.0.1",
+		"@vue/eslint-config-typescript": "^4.0.0",
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.16.0",
+		"eslint-plugin-vue": "^5.0.0",
+		"typescript": "^3.4.3",
+		"vue-template-compiler": "^2.5.21"
+	}
 }

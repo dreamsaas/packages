@@ -1,40 +1,43 @@
-
-import { Config, Plugin, Server } from 'dreamsaas';
+import { Config, Plugin, Server } from '@dreamsaas/types'
 
 /**
  * Baseline server instance.
- * 
- * This will only provide an API for setting a config, and extending 
+ *
+ * This will only provide an API for setting a config, and extending
  * functionality via Plugins
  */
 export class ExtendableServer implements Server {
-  public plugins: Plugin[] = []
+	public plugins: Plugin[] = []
 
-  constructor(public config: Config = {}) {}
+	constructor(public config: Config = {}) {}
 
-  async use(plugin:Plugin, options?:{}){
-    this.addPlugin(plugin)
+	async use(plugin: Plugin, options?: {}) {
+		this.addPlugin(plugin)
 
-    const pluginOptions = this.getPluginConfigOptions(plugin.id)
-    const combinedOptions = {...pluginOptions, ...options}
-    
-    if(typeof plugin.created === 'function') await plugin.created(this,combinedOptions)
-  }
+		const pluginOptions = this.getPluginConfigOptions(plugin.id)
+		const combinedOptions = { ...pluginOptions, ...options }
 
-  getPlugin(pluginId:string){
-    return this.plugins.find(({id})=>id === pluginId)
-  }
+		if (typeof plugin.created === 'function')
+			await plugin.created(this, combinedOptions)
+	}
 
-  addPlugin(plugin: Plugin){
-    return this.plugins = this.plugins.concat(plugin)
-  }
+	getPlugin(pluginId: string) {
+		return this.plugins.find(({ id }) => id === pluginId)
+	}
 
-  getPluginConfigOptions(pluginId:string){
-    const foundPluginInConfig = this.getPluginConfig(pluginId)
-    return foundPluginInConfig && foundPluginInConfig.options
-  }
-  
-  getPluginConfig(pluginId:string){
-    return this.config.plugins && this.config.plugins.find(plugin=>plugin.id === pluginId)
-  }
+	addPlugin(plugin: Plugin) {
+		return (this.plugins = this.plugins.concat(plugin))
+	}
+
+	getPluginConfigOptions(pluginId: string) {
+		const foundPluginInConfig = this.getPluginConfig(pluginId)
+		return foundPluginInConfig && foundPluginInConfig.options
+	}
+
+	getPluginConfig(pluginId: string) {
+		return (
+			this.config.plugins &&
+			this.config.plugins.find(plugin => plugin.id === pluginId)
+		)
+	}
 }

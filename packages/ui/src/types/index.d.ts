@@ -1,5 +1,5 @@
-export * from '../ui'
-export * from 'dreamsaas'
+import '@dreamsaas/types'
+// export * from '@dreamsaas/core'
 declare module 'dreamsaas' {
 	export interface Link {
 		text: string

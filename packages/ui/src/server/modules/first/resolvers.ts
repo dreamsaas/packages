@@ -5,7 +5,7 @@ import {
 	PUBSUB_UI_SETTINGS_CHANGED
 } from '../pubsub'
 import { getServerRunner, watchFiles } from '../project-manager'
-import { Server } from '../../../types/index'
+import { Server } from '@dreamsaas/core'
 import { UIService } from '../../../ui.service'
 
 let server: Server
