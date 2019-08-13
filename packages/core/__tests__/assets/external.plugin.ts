@@ -1,6 +1,6 @@
-import { Plugin, Server } from '@dreamsaas/core'
+import { Plugin, Server } from '@dreamsaas/types'
 
-declare module '@dreamsaas/core' {
+declare module '@dreamsaas/types' {
 	interface Server {
 		myplugin: { prop: string; getContent(): string }
 	}

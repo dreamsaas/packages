@@ -1,4 +1,4 @@
-import { Server, Action as IAction } from '@dreamsaas/core'
+import { Server, Action as IAction } from '@dreamsaas/types'
 
 /**
  *  TODO: consider adding a hook/action type

@@ -1,4 +1,4 @@
-import { Server, Service, Action as iAction } from '@dreamsaas/core'
+import { Server, Service, Action as iAction } from '@dreamsaas/types'
 import { Hook, HookOptions } from './hook'
 import { Action } from './action'
 

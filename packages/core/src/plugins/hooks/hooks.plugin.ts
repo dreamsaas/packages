@@ -1,4 +1,4 @@
-import { Plugin, Server } from '@dreamsaas/core'
+import { Plugin, Server } from '@dreamsaas/types'
 import { HookService } from './hook-service'
 import { hooksGenerator } from './hooks.generator'
 import { objectExpression } from '@babel/types'

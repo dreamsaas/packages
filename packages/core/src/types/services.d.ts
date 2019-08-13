@@ -2,7 +2,7 @@ import { ContainerService } from '../plugins/services/container-service'
 import { Container } from '../plugins/services/container'
 // import {Server} from '../../types'
 
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
 	export interface Service {
 		id: string
 		[name: string]: any

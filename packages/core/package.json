@@ -6,6 +6,7 @@
 	"homepage": "https://github.com/dreamsaas/playground#readme",
 	"license": "ISC",
 	"main": "src/core.ts",
+	"types": "src/types/index.d.ts",
 	"directories": {
 		"lib": "lib",
 		"test": "__tests__"
@@ -27,6 +28,7 @@
 	"dependencies": {
 		"@babel/parser": "^7.5.0",
 		"@babel/types": "^7.5.0",
+		"@types/jest": "^24.0.17",
 		"@types/node": "^12.0.0",
 		"@types/ramda": "github:types/npm-ramda#dist",
 		"fastify": "^2.3.0",
@@ -36,8 +38,7 @@
 		"ts-jest": "^24.0.2",
 		"ts-node": "^8.1.0",
 		"typeorm": "^0.2.17",
-		"typescript": "^3.4.5",
-		"@dreamsaas/types": "1.0.0"
+		"typescript": "^3.4.5"
 	},
 	"devDependencies": {
 		"cpy-cli": "^2.0.0"

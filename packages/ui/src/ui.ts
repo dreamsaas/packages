@@ -1,4 +1,3 @@
-import '@dreamsaas/types'
 import { UIService } from './ui.service'
 import { Plugin, Server } from '@dreamsaas/types'
 export default class UIPlugin implements Plugin {

@@ -1,4 +1,4 @@
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
   interface Config {
     /**
      * Default is info

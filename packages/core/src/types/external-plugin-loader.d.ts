@@ -1,4 +1,4 @@
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
   /**
    * Settings for installing and configuring an external plugin
    */

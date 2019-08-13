@@ -1,9 +1,6 @@
 {
   "folders": [
     {
-      "path": "./packages/types"
-    },
-    {
       "path": "./packages/docs"
     },
     {
@@ -20,6 +17,9 @@
     },
     {
       "path": "./packages/ui-client"
+    },
+    {
+      "path": "./packages/playground"
     }
   ],
   "settings": {

@@ -29,7 +29,6 @@
 	"dependencies": {
 		"@dreamsaas/core": "^0.0.0",
 		"@dreamsaas/fastify": "^0.0.0",
-		"@dreamsaas/types": "^1.0.0",
 		"@types/jest": "^24.0.12",
 		"@types/node": "^12.0.0",
 		"jest": "^24.8.0",

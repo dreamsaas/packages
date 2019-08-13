@@ -1,6 +1,6 @@
 import { SettingsService } from '../plugins/settings/settings.service'
 
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
   export interface SettingConfiguration {
     id: string
     type?: string

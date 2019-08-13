@@ -5,8 +5,8 @@
 	"author": "John H Horton <johnhhorton@outlook.com>",
 	"homepage": "https://github.com/dreamsaassaas/playground#readme",
 	"license": "ISC",
-	"main": "lib/ui.js",
-	"types": "./src/types/index.d.ts",
+	"main": "src/ui.ts",
+	"types": "src/types/index.d.ts",
 	"bin": {
 		"dreamsaas": "bin/dreamsaas"
 	},
@@ -38,7 +38,6 @@
 		"@dreamsaas/model": "^0.0.0",
 		"@types/express": "^4.17.0",
 		"@types/graphql": "^14.2.3",
-		"@dreamsaas/types": "^1.0.0",
 		"@types/node": "^12.0.0",
 		"apollo-server": "^2.8.1",
 		"apollo-server-fastify": "^2.5.0",

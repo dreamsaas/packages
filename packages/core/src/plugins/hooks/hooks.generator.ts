@@ -1,6 +1,6 @@
 import { HookService } from './hook-service'
 import { HookOptions } from './hook'
-import { Action } from '@dreamsaas/core'
+import { Action } from '@dreamsaas/types'
 
 export interface HooksGeneratorConfig {
 	hooks?: HookOptions[]

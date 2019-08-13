@@ -1,4 +1,4 @@
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
   interface Server {
     /**
      * Runs the setup functions for all plugins.

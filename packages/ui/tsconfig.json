@@ -6,6 +6,6 @@
 		"esModuleInterop": true,
 		"strictNullChecks": false
 	},
-	"include": [".src/**/*", "./assets"],
+	"include": [".src/**/*", "./assets/**/*"],
 	"exclude": ["../(?!ui)"]
 }

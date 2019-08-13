@@ -1,6 +1,7 @@
-import '@dreamsaas/types'
-// export * from '@dreamsaas/core'
-declare module 'dreamsaas' {
+import plugin from '../ui'
+export default plugin
+
+declare module '@dreamsaas/types' {
 	export interface Link {
 		text: string
 		pageName: string

@@ -1,6 +1,6 @@
 import { HookService } from '../plugins/hooks/hook-service'
 
-declare module 'dreamsaas' {
+declare module '@dreamsaas/types' {
   export interface HookAction {
     actionId: string
     uniqueId?: string //maybe not needed
