@@ -1,5 +1,4 @@
 import { createServer } from '../src/server'
-import '../src/types'
 import { Server, Service } from '@dreamsaas/types'
 import * as path from 'path'
 import { Action } from '../src/plugins/hooks/action'
