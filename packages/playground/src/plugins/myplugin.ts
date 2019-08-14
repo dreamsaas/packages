@@ -1,7 +1,12 @@
-import { Plugin, PluginSettingsUI } from '@dreamsaas/types'
+import {
+  Plugin,
+  PluginSettingsUI,
+  SettingConfiguration
+} from '@dreamsaas/types'
 
 class MyPlugin implements Plugin {
   id: string = 'my-plugin'
+  settings: SettingConfiguration[] = [{ id: '' }]
   settingsUI: PluginSettingsUI = {
     pages: [
       {

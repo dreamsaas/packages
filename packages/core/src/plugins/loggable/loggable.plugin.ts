@@ -1,4 +1,9 @@
-import { LogOptions, Plugin, Server } from '@dreamsaas/types'
+import {
+	LogOptions,
+	Plugin,
+	Server,
+	SettingConfiguration
+} from '@dreamsaas/types'
 export const hooks = {
 	BEFORE_LOG: 'BEFORE_LOG',
 	LOG: 'LOG',
@@ -9,6 +14,15 @@ export default class LoggablePlugin implements Plugin {
 	id = 'loggable'
 
 	hooks = hooks
+	settings: SettingConfiguration[] = [
+		{
+			id: 'log-level',
+			default: 'error',
+			description: 'log level for running server process',
+			label: 'Log level',
+			type: 'select'
+		}
+	]
 
 	created(server: Server, options) {
 		if (!server.config.logLevel) {
