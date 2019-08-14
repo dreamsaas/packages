@@ -3,23 +3,17 @@ import { Plugin, Server } from '@dreamsaas/types'
 export default class UIPlugin implements Plugin {
 	id = 'ui'
 	settingsUI = {
-		pages: [{ id: 'mypage' }],
+		pages: [
+			{
+				id: '/server',
+				heading: 'Server Settings',
+				description: `Settings for the main server process.`
+			}
+		],
 		sidebar: [
 			{
-				text: 'text',
-				pageName: 'home'
-			},
-			{
-				text: 'text',
-				pageName: 'home'
-			},
-			{
-				text: 'text',
-				pageName: 'home'
-			},
-			{
-				text: 'text',
-				pageName: 'home'
+				pageName: '/server',
+				text: 'Server Settings'
 			}
 		]
 	}

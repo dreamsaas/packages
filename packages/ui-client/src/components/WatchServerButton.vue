@@ -8,7 +8,6 @@ import {watchMutation} from '../graphql/queries'
 export default {
 	methods: {
 		startWatch() {
-			// @ts-ignore
 			this.$apollo.mutate(watchMutation)
 		}
 	}

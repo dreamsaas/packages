@@ -3,7 +3,6 @@ import { Plugin, Server, ActionSettingsUI, Service } from '@dreamsaas/types'
 
 export class UIService implements Service {
 	id = 'ui-service'
-	test: ActionSettingsUI
 	constructor(public server: Server) {}
 
 	getUIConfig() {
