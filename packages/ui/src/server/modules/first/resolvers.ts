@@ -1,23 +1,27 @@
+import { Server } from '@dreamsaas/types'
 import * as path from 'path'
+import { UIService } from '../../../ui.service'
 import {
-	PUBSUB_HOOKS_CHANGED,
+	getProjectLocation,
+	getServerRunner,
+	watchFiles
+} from '../project-manager'
+import {
 	pubsub,
+	PUBSUB_HOOKS_CHANGED,
 	PUBSUB_UI_SETTINGS_CHANGED
 } from '../pubsub'
-import { getServerRunner, watchFiles } from '../project-manager'
-import { Server } from '@dreamsaas/core'
-import { UIService } from '../../../ui.service'
 
 let server: Server
 export default {
 	Query: {
 		async config() {
-			const config = require('../assets/config.json')
+			const config = require(getProjectLocation() + '/src/config.json')
 			return JSON.stringify(config)
 		},
 		async plugins() {
 			const { run } = getServerRunner(
-				path.join(__dirname, '../assets/src/main.ts')
+				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
 			const plugins = server.plugins.map(plugin => plugin.id)
@@ -26,7 +30,7 @@ export default {
 		},
 		async hooks() {
 			const { run } = getServerRunner(
-				path.join(__dirname, '../assets/src/main.ts')
+				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
 			const items = server.hooks.hooks.map(item => item.id)
@@ -35,7 +39,7 @@ export default {
 		},
 		async actions() {
 			const { run } = getServerRunner(
-				path.join(__dirname, '../assets/src/main.ts')
+				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
 			const items = server.hooks.actions.map(item => item.id)
@@ -44,7 +48,7 @@ export default {
 		},
 		async services() {
 			const { run } = getServerRunner(
-				path.join(__dirname, '../assets/src/main.ts')
+				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
 			const items = server.services.getServices().map(items => items.id)
@@ -55,7 +59,7 @@ export default {
 	Mutation: {
 		async startServer() {
 			const { run } = getServerRunner(
-				path.join(__dirname, '../assets/src/main.ts')
+				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
 			pubsub.publish(PUBSUB_HOOKS_CHANGED, {
@@ -70,10 +74,10 @@ export default {
 		},
 		async watch() {
 			console.log('starting watch')
-			watchFiles(path.join(__dirname, '../../../../assets/**/*'), async () => {
+			watchFiles(path.join(getProjectLocation(), '/src/**/*'), async () => {
 				if (server) server.stop()
 				const { run } = getServerRunner(
-					path.join(__dirname, '../../../../assets/src/main.ts')
+					path.join(getProjectLocation(), '/src/main.ts')
 				)
 				server = await run()
 

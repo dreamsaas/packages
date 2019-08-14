@@ -1,11 +1,10 @@
 {
-	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"outDir": "./lib",
 		"noImplicitAny": false,
 		"esModuleInterop": true,
-		"strictNullChecks": false
+		"strictNullChecks": false,
+		"types": ["@dreamsaas/core"]
 	},
-	"include": [".src/**/*", "./assets/**/*"],
-	"exclude": ["../(?!ui)"]
+	"include": ["./src/**/*"]
 }
