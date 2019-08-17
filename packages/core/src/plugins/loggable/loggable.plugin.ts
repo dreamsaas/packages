@@ -16,19 +16,11 @@ export default class LoggablePlugin implements Plugin {
 	hooks = hooks
 	settings: SettingConfiguration[] = [
 		{
-			id: 'log-level',
-			default: 'error',
-			description: 'log level for running server process',
-			label: 'Log level',
-			type: 'select'
+			id: 'log-level'
 		}
 	]
 
 	created(server: Server, options) {
-		if (!server.config.logLevel) {
-			server.config.logLevel = 'error'
-		}
-
 		server.log = async (logOptions: LogOptions) => {
 			let result = await server.hooks.runHook(hooks.BEFORE_LOG, logOptions)
 			result = await server.hooks.runHook(hooks.LOG, result)
@@ -40,20 +32,21 @@ export default class LoggablePlugin implements Plugin {
 		server.hooks.addHookAction(hooks.LOG, {
 			id: 'default-log-action',
 			handler(log: LogOptions, server) {
+				const logLevel = server.config.settings['log-level']
 				if (log.type === 'error') {
 					console.error(log.message, log.context)
 				}
-				if (server.config.logLevel === 'error') return
+				if (logLevel === 'error') return
 
 				if (log.type === 'warn') {
 					console.warn(log.message, log.context)
 				}
-				if (server.config.logLevel === 'warn') return
+				if (logLevel === 'warn') return
 
 				if (log.type === 'info') {
 					console.log(log.message, log.context)
 				}
-				if (server.config.logLevel === 'info') return
+				if (logLevel === 'info') return
 
 				if (log.type === 'debug') {
 					console.log(log.message, JSON.stringify(log.context, null, 4))

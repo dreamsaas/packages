@@ -9,56 +9,97 @@ import gql from 'graphql-tag'
 Vue.config.productionTip = false
 
 const start = async () => {
-	const store = await storeBuilder({})
-	const router = await routerBuilder({}, store)
 	const { apolloProvider } = await setupGraphQL()
+	const store = await storeBuilder({ apolloProvider })
+	const router = await routerBuilder({}, store)
 
 	new Vue({
 		router,
 		store,
 		apolloProvider,
 		render: h => h(App),
-		created() {
-			this.$apollo.addSmartSubscription('uiSettingsChanged', {
+		async created() {
+			const updateServerState = serverState => {
+				if (serverState) {
+					store.commit('serverState', serverState)
+					if (serverState.uiSettings.pages.length > 0) {
+						this.$router.addRoutes(
+							serverState.uiSettings.pages
+								.filter(
+									page =>
+										!this.$store.state.dynamicallyAddedroutes.includes(page.id)
+								)
+								.map(page => {
+									this.$store.commit('addRoute', page)
+									return {
+										path: page.id,
+										name: page.id,
+										component: SettingsPage
+									}
+								})
+						)
+					}
+				}
+			}
+			const result = await this.$apollo.query({
 				query: gql`
-					subscription uiSettingsChanged {
-						uiSettingsChanged {
-							pages {
+					query serverState {
+						serverState {
+							config
+							settings {
 								id
-								heading
+								type
+								default
+								label
 								description
 							}
-							sidebar {
-								pageName
-								text
+							uiSettings {
+								sidebar {
+									text
+									pageName
+								}
+								pages {
+									id
+									heading
+									description
+									settings
+								}
+							}
+						}
+					}
+				`
+			})
+			updateServerState(result.data.serverState)
+
+			this.$apollo.addSmartSubscription('serverState', {
+				query: gql`
+					subscription serverState {
+						serverState {
+							config
+							settings {
+								id
+								type
+								default
+								label
+								description
+							}
+							uiSettings {
+								sidebar {
+									text
+									pageName
+								}
+								pages {
+									id
+									heading
+									description
+									settings
+								}
 							}
 						}
 					}
 				`,
-				result({ data: { uiSettingsChanged } }) {
-					console.log(this.$router)
-					if (uiSettingsChanged) {
-						store.commit('uiSettings', uiSettingsChanged)
-						if (uiSettingsChanged.pages.length > 0) {
-							this.$router.addRoutes(
-								uiSettingsChanged.pages
-									.filter(
-										page =>
-											!this.$store.state.dynamicallyAddedroutes.includes(
-												page.id
-											)
-									)
-									.map(page => {
-										this.$store.commit('addRoute', page)
-										return {
-											path: page.id,
-											name: page.id,
-											component: SettingsPage
-										}
-									})
-							)
-						}
-					}
+				result({ data: { serverState } }) {
+					updateServerState(serverState)
 				}
 			})
 		}

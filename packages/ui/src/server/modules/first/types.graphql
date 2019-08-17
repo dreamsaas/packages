@@ -17,27 +17,41 @@ type AdminPage {
 	settings: [String]
 }
 
-type PluginSettingsUI {
+type SettingsConfiguration {
+	id: String
+	type: String
+	default: Any
+	label: String
+	description: String
+	choices: [Any]
+	keyValueType: String
+	listType: String
+}
+
+type UISetting {
 	sidebar: [Link]
 	pages: [AdminPage]
 	sections: [AdminSection]
 }
 
+type ServerState {
+	settings: [SettingsConfiguration]
+	uiSettings: UISetting
+	config: Any
+}
+
 type Query {
-	config: String
-	plugins: [String]
-	hooks: [String]
-	actions: [String]
-	services: [String]
+	serverState: ServerState
 }
 
 type Mutation {
 	startServer: Boolean
 	stopServer: Boolean
 	watch: Boolean
+	saveConfig(config: String!): Boolean
 }
 
 type Subscription {
 	hooksChanged: [String]
-	uiSettingsChanged: PluginSettingsUI
+	serverState: ServerState
 }

@@ -2,6 +2,25 @@ import plugin from '../ui'
 export default plugin
 
 declare module '@dreamsaas/types' {
+	export type PrimitiveSettingsType = 'string' | 'number' | 'boolean'
+
+	export type SettingType =
+		| PrimitiveSettingsType
+		| 'list'
+		| 'keyvalue'
+		| 'choice'
+
+	export interface SettingConfiguration {
+		id:string
+		type?: SettingType
+		default?: any
+		label?: string
+		description?: string
+		choices?: any[]
+		keyValueType?: PrimitiveSettingsType
+		listType?: PrimitiveSettingsType
+	}
+
 	export interface Link {
 		text: string
 		pageName: string

@@ -1,45 +1,19 @@
 <template>
 	<aside class="w-64 bg-gray-800 shadow-lg h-full p-6 flex-none">
-		<WatchServerButton />
 		<ul>
 			<li>
 				<button>Plugins</button>
 			</li>
-			<li v-for="item in sidebar" :key="item">
-				<button @click="$router.push({name:item.pageName})">{{item.text }}</button>
-			</li>
+			<template v-if="$store.state.serverState.uiSettings">
+				<li
+					v-for="item in $store.state.serverState.uiSettings.sidebar"
+					:key="item.pageName"
+				>
+					<button @click="$router.push({ name: item.pageName })">
+						{{ item.text }}
+					</button>
+				</li>
+			</template>
 		</ul>
 	</aside>
 </template>
-<script lang="ts">
-import Vue from 'vue'
-import gql from 'graphql-tag'
-export default Vue.extend({
-	apollo: {
-		$subscribe: {
-			uiSettingsChanged: {
-				query: gql`
-					subscription uiSettingsChanged {
-						uiSettingsChanged {
-							sidebar {
-								pageName
-								text
-							}
-						}
-					}
-				`,
-				result({ data: { uiSettingsChanged } }) {
-					console.log(uiSettingsChanged)
-					this['sidebar'] =
-						(uiSettingsChanged && uiSettingsChanged.sidebar) || []
-				}
-			}
-		}
-	},
-	data() {
-		return {
-			sidebar: []
-		}
-	}
-})
-</script>

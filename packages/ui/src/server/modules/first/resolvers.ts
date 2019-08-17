@@ -6,58 +6,37 @@ import {
 	getServerRunner,
 	watchFiles
 } from '../project-manager'
-import {
-	pubsub,
-	PUBSUB_HOOKS_CHANGED,
-	PUBSUB_UI_SETTINGS_CHANGED
-} from '../pubsub'
-
+import { pubsub, PUBSUB_HOOKS_CHANGED, SERVER_STATE } from '../pubsub'
+import * as fs from 'fs'
 let server: Server
 export default {
 	Query: {
-		async config() {
-			const config = require(getProjectLocation() + '/src/config.json')
-			return JSON.stringify(config)
-		},
-		async plugins() {
+		async serverState() {
+			console.log('query: serverstate')
+			if (server) {
+				const serverState = server.services
+					.getService<UIService>('ui-service')
+					.getServerState()
+				return serverState
+			}
+			console.log('starting server')
+
 			const { run } = getServerRunner(
 				path.join(getProjectLocation(), '/src/main.ts')
 			)
 			server = await run()
-			const plugins = server.plugins.map(plugin => plugin.id)
+
+			const serverState = server.services
+				.getService<UIService>('ui-service')
+				.getServerState()
 			await server.stop()
-			return plugins
-		},
-		async hooks() {
-			const { run } = getServerRunner(
-				path.join(getProjectLocation(), '/src/main.ts')
-			)
-			server = await run()
-			const items = server.hooks.hooks.map(item => item.id)
-			await server.stop()
-			return items
-		},
-		async actions() {
-			const { run } = getServerRunner(
-				path.join(getProjectLocation(), '/src/main.ts')
-			)
-			server = await run()
-			const items = server.hooks.actions.map(item => item.id)
-			await server.stop()
-			return items
-		},
-		async services() {
-			const { run } = getServerRunner(
-				path.join(getProjectLocation(), '/src/main.ts')
-			)
-			server = await run()
-			const items = server.services.getServices().map(items => items.id)
-			await server.stop()
-			return items
+
+			return serverState
 		}
 	},
 	Mutation: {
 		async startServer() {
+			console.log('starting server')
 			const { run } = getServerRunner(
 				path.join(getProjectLocation(), '/src/main.ts')
 			)
@@ -70,6 +49,17 @@ export default {
 
 		async stopServer() {
 			await server.stop()
+			return true
+		},
+		async saveConfig(parent, args: { config: string }) {
+			console.log('mutation: save config', args)
+			// const config = JSON.stringify(args.config)
+			fs.writeFileSync(
+				path.join(getProjectLocation(), '/src/config.json'),
+				args.config,
+				{ encoding: 'utf8' }
+			)
+
 			return true
 		},
 		async watch() {
@@ -85,12 +75,12 @@ export default {
 					hooksChanged: server.hooks.hooks.map(i => i.id)
 				})
 
-				const uiSettings = server.services
+				const serverState = server.services
 					.getService<UIService>('ui-service')
-					.getUIConfig()
+					.getServerState()
 
-				await pubsub.publish(PUBSUB_UI_SETTINGS_CHANGED, {
-					uiSettingsChanged: uiSettings
+				await pubsub.publish(SERVER_STATE, {
+					serverState
 				})
 
 				server.stop()
@@ -103,8 +93,8 @@ export default {
 		hooksChanged: {
 			subscribe: () => pubsub.asyncIterator([PUBSUB_HOOKS_CHANGED])
 		},
-		uiSettingsChanged: {
-			subscribe: () => pubsub.asyncIterator([PUBSUB_UI_SETTINGS_CHANGED])
+		serverState: {
+			subscribe: () => pubsub.asyncIterator([SERVER_STATE])
 		}
 	}
 }
