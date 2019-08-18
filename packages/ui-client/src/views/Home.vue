@@ -21,7 +21,6 @@
 </template>
 <script lang="ts">
 import gql from 'graphql-tag'
-import { hooks, watchMutation } from '../graphql/queries'
 
 export default {
 	// apollo: {
@@ -40,5 +39,3 @@ export default {
 	// }
 }
 </script>
-
-

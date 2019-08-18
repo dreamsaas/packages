@@ -6,7 +6,6 @@ import {
 
 class MyPlugin implements Plugin {
   id: string = 'my-plugin'
-  settings: SettingConfiguration[] = [{ id: '' }]
   settingsUI: PluginSettingsUI = {
     pages: [
       {

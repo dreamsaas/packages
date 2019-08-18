@@ -30,6 +30,7 @@ export default {
 				.getService<UIService>('ui-service')
 				.getServerState()
 			await server.stop()
+			server = null
 
 			return serverState
 		}

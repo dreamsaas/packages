@@ -16,7 +16,8 @@ export default class LoggablePlugin implements Plugin {
 	hooks = hooks
 	settings: SettingConfiguration[] = [
 		{
-			id: 'log-level'
+			id: 'log-level',
+			default: 'error'
 		}
 	]
 

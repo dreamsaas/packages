@@ -11,9 +11,7 @@ declare module '@dreamsaas/types' {
 		| 'choice'
 
 	export interface SettingConfiguration {
-		id:string
 		type?: SettingType
-		default?: any
 		label?: string
 		description?: string
 		choices?: any[]
@@ -43,6 +41,7 @@ declare module '@dreamsaas/types' {
 		description?: string
 		settings?: string[] //setting id
 		sections?: [] // admin section id
+		component?: string
 	}
 
 	export interface PluginSettingsUI {

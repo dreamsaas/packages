@@ -39,18 +39,24 @@ export class SettingsService implements Service {
 		const uncombinedSettings: SettingConfiguration[] = merge.all(
 			plugins.map(plugin => plugin.settings || [])
 		)
+		console.log('uncombined', uncombinedSettings)
 
 		const settings = uncombinedSettings.reduce((previous, current, index) => {
+			console.log(previous, current)
 			const existingSetting = previous.find(prev => prev.id === current.id)
 			if (existingSetting) {
 				return previous.map(setting => {
 					if (setting.id === current.id) {
 						return { ...setting, ...current }
 					}
+					return setting
 				})
 			}
+			if (!current) return previous
 			return previous.concat(current)
 		}, [])
+
+		console.log('settings', settings)
 
 		return settings
 	}

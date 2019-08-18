@@ -52,6 +52,7 @@ const start = async () => {
 								default
 								label
 								description
+								choices
 							}
 							uiSettings {
 								sidebar {
@@ -82,6 +83,7 @@ const start = async () => {
 								default
 								label
 								description
+								choices
 							}
 							uiSettings {
 								sidebar {

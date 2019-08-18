@@ -29,7 +29,9 @@ export default class SettingsPlugin implements Plugin {
 
 	setDefaultConfigSettings() {
 		const settings = this.server.settings.getSettingsFromPlugins()
+		console.log('setDefaultConfigSettings', settings)
 		settings.forEach(setting => {
+			console.log('setDefaultConfigSettings foreach', setting)
 			if (typeof this.server.settings.getSetting(setting.id) === 'undefined') {
 				if (typeof setting.default !== 'undefined') {
 					this.server.settings.setSetting(setting.id, setting.default)

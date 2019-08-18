@@ -1,15 +1,16 @@
 <template>
-	<aside class="w-64 bg-gray-800 shadow-lg h-full p-6 flex-none">
+	<aside class="w-64 bg-gray-800 shadow-lg h-full py-6 flex-none">
 		<ul>
-			<li>
-				<button>Plugins</button>
-			</li>
 			<template v-if="$store.state.serverState.uiSettings">
 				<li
+					class="block border-gray-700 border-b"
 					v-for="item in $store.state.serverState.uiSettings.sidebar"
 					:key="item.pageName"
 				>
-					<button @click="$router.push({ name: item.pageName })">
+					<button
+						class="block px-6 py-3 hover:bg-gray-700 w-full text-left"
+						@click="$router.push({ name: item.pageName })"
+					>
 						{{ item.text }}
 					</button>
 				</li>

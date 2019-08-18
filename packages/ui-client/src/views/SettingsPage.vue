@@ -8,22 +8,13 @@
 		</p>
 
 		<div v-if="pageSettings.settings">
-			<div
+			<SettingInput
 				v-for="settingId in pageSettings.settings"
 				:key="settingId"
-				class="pb-4"
+				:settingConfig="settingConfiguration(settingId)"
+				class="mb-6"
 			>
-				<label class="text-lg font-semibold block pb-2">
-					{{ settingConfiguration(settingId).label }}</label
-				>
-				<p class="pb-4">{{ settingConfiguration(settingId).description }}</p>
-				<input
-					type="text"
-					@input="e => onSettingsChange(e.target.value, settingId)"
-					class="text-gray-900 rounded px-3 py-1"
-					:value="$store.state.config.settings[settingId]"
-				/>
-			</div>
+			</SettingInput>
 			<BaseButton @click="$store.dispatch('saveConfig')">Save</BaseButton>
 		</div>
 	</div>

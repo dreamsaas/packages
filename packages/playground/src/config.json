@@ -1,1 +1,1 @@
-{ "settings": { "log-level": "error" } }
+{"settings":{"log-level":"error","app-name":"Test App"}}
