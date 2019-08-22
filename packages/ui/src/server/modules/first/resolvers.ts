@@ -8,6 +8,8 @@ import {
 } from '../project-manager'
 import { pubsub, PUBSUB_HOOKS_CHANGED, SERVER_STATE } from '../pubsub'
 import * as fs from 'fs'
+import webpack from 'webpack'
+const vueloader = require('vue-loader')
 let server: Server
 export default {
 	Query: {
