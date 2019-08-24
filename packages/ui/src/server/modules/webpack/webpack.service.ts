@@ -1,12 +1,11 @@
-import MemoryFS from 'memory-fs'
-import { join } from 'path'
-import { VueLoaderPlugin } from 'vue-loader'
-import webpack from 'webpack'
-import { getProjectLocation } from '../project-manager'
+import MemoryFS from 'memory-fs';
+import { VueLoaderPlugin } from 'vue-loader';
+import webpack from 'webpack';
+import { getProjectLocation } from '../project-manager';
 
 export const compileComponent = async (path: string) => {
 	const resolvedPath = require.resolve(path, { paths: [getProjectLocation()] })
-
+console.log('resolved path', resolvedPath)
 	const fs = new MemoryFS()
 
 	const compiler = webpack({

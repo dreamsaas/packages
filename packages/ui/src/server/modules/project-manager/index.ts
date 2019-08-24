@@ -13,9 +13,7 @@ const formatPathForNode = (filePath: string) => filePath.replace(/\\/g, '/')
 
 const clearRequireCache = (filePath: string) => {
 	const osFilePath = formatPathForOS(filePath)
-	console.log('clearing cache', osFilePath)
 	if (require.cache[osFilePath]) {
-		console.log('clearing cache')
 		delete require.cache[osFilePath]
 	}
 }
@@ -24,11 +22,8 @@ const clearRequireCache = (filePath: string) => {
  * @param path absolute path to file exporting run function for the server
  */
 export const getServerRunner = filePath => {
-	console.log('get running server', filePath)
 	clearRequireCache(filePath)
-	console.log('3')
 	const { run } = require(filePath)
-	console.log('get running server4')
 	return { run }
 }
 

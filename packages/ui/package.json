@@ -25,11 +25,9 @@
 	"scripts": {
 		"bin": "./bin/dreamsaas",
 		"start": "ts-node src/ui.ts",
-		"start:dev": "nodemon",
-		"client:serve": "cd client && npm run serve",
-		"client:build": "cd client && npm run build",
+		"serve": "nodemon",
 		"test": "echo \"Error: run tests from root\" && exit 1",
-		"tsc": "tsc",
+		"tsc": "tsc --noEmit",
 		"tsc:watch": "tsc --watch"
 	},
 	"dependencies": {
@@ -59,6 +57,7 @@
 		"ts-jest": "^24.0.2",
 		"ts-node": "^8.1.0",
 		"typescript": "^3.4.5",
+		"vue": "^2.6.10",
 		"webpack": "^4.39.2",
 		"yargs": "^13.2.4"
 	},

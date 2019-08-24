@@ -3,7 +3,6 @@
     "outDir": "./lib",
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "strictNullChecks": false,
-    "preserveSymlinks": true,
+    "strictNullChecks": false
   }
 }

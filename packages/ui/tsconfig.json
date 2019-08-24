@@ -1,12 +1,18 @@
 {
 	"compilerOptions": {
-		"lib": ["es2016"],
+		"lib": [
+			"es2016"
+		],
 		"outDir": "./lib",
 		"noImplicitAny": false,
 		"esModuleInterop": true,
 		"strictNullChecks": false,
-		"preserveSymlinks": true,
-		"types": ["@dreamsaas/core"]
+		"types": [
+			"@dreamsaas/core",
+			"vue"
+		]
 	},
-	"include": ["./src/**/*"]
+	"include": [
+		"./src/**/*"
+	]
 }
