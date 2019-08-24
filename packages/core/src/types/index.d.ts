@@ -63,6 +63,11 @@ declare module '@dreamsaas/types' {
 		 * This is a key value pair so that hooks can be exported for easier discovery and use.
 		 */
 		hooks?: {}
+
+		/**
+		 * Used to hide internal core plugins that the developer shouldn't see in the UI
+		 */
+		hidden?:boolean
 		/**
 		 * Lifecycle function when the plugin is instantiated.
 		 *

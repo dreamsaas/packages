@@ -7,7 +7,7 @@ export const hooks = {
 
 export class ExternalPluginLoaderPlugin implements Plugin {
 	id = 'external-plugin-loader'
-
+	hidden=true
 	hooks = hooks
 
 	async created(server: Server) {

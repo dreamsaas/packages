@@ -5,6 +5,7 @@ import { objectExpression } from '@babel/types'
 
 export class HooksPlugin implements Plugin {
 	public id = 'hooks'
+	hidden=true
 
 	async created(server: Server) {
 		const hooks = new HookService({ server })

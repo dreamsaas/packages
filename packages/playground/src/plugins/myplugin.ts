@@ -6,27 +6,41 @@ import {
 
 class MyPlugin implements Plugin {
   id: string = 'my-plugin'
+
   settingsUI: PluginSettingsUI = {
+    components:[{
+      name: 'MyComponent',
+      path: './src/plugins/mycustomcomponent.vue'
+    }],
     pages: [
       {
-        id: '/page-1',
+        id: 'custom-component-page',
+        path:'/custom-component-page',
+        heading: 'PAGE 2',
+        description: `this is a description of page 2`,
+        component:'MyComponent'
+      },
+      {
+        id: 'page-1',
+        path:'/page-1',
         heading: 'PAGE 1',
         description: `this is a description of page 1`
       },
       {
-        id: '/page-2',
-        heading: 'PAGE 2',
-        description: `this is a description of page 2`
-      }
+        id: 'page-1-id',
+        path:'/page-1/:id',
+        heading: 'PAGE 1 id subpage',
+        component:'MyComponent'
+      },
     ],
     sidebar: [
       {
-        pageName: '/page-1',
+        pageId: 'page-1',
         text: 'Page 1'
       },
       {
-        pageName: '/page-2',
-        text: 'Page 2'
+        pageId: 'custom-component-page',
+        text: 'custom component'
       }
     ]
   }

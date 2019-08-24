@@ -16,12 +16,16 @@ declare module '@dreamsaas/types' {
 		description?: string
 		choices?: any[]
 		keyValueType?: PrimitiveSettingsType
-		listType?: PrimitiveSettingsType
+		listType?: PrimitiveSettingsType,
+		/**
+		 * Vue component name used to override the default.
+		 */
+		component?:string
 	}
 
 	export interface Link {
 		text: string
-		pageName: string
+		pageId: string
 	}
 
 	export interface Sidebar {
@@ -33,10 +37,11 @@ declare module '@dreamsaas/types' {
 		heading?: string
 		description?: string
 		settings?: string[] //setting id
-	}
+		component?: string	}
 
 	export interface AdminPage {
 		id: string
+		path: string
 		heading?: string
 		description?: string
 		settings?: string[] //setting id
@@ -44,10 +49,21 @@ declare module '@dreamsaas/types' {
 		component?: string
 	}
 
+	export interface Component {
+		/** The Path to resolve from the developer's project to get the .vue file */
+		path:string
+		/** Optional name of the component, otherwise will pull from the component's name property */
+		name?:string,
+	}
+
 	export interface PluginSettingsUI {
 		sidebar?: Link[]
 		pages?: AdminPage[]
 		sections?: AdminSection[]
+		/**
+		 * Vue components to be loaded in to the admin app
+		 */
+		components?:Component[]
 	}
 
 	export interface ActionSettingsUI {

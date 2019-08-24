@@ -4,7 +4,10 @@
 		<main class="flex w-full h-full">
 			<Sidebar />
 			<article class="p-6 h-full overflow-y-auto bg-gray-900 flex-grow">
-				<router-view />
+				<router-view v-if="!$store.state.loading"/>
+				<div v-else>
+					<h1>Loading server state</h1>
+				</div>
 			</article>
 		</main>
 	</div>

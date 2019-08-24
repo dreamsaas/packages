@@ -12,6 +12,7 @@ export const hooks = {
 
 export default class LoggablePlugin implements Plugin {
 	id = 'loggable'
+	hidden = true
 
 	hooks = hooks
 	settings: SettingConfiguration[] = [

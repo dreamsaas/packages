@@ -15,15 +15,19 @@ export class UIService implements Service {
 
 	getServerState() {
 		const pluginInstances = this.server.plugins
-		const plugins = pluginInstances.map(({ id, hooks, version }) => ({
+		const plugins = pluginInstances.map(({ id, hooks, hidden,version,dependencies,settingsUI}) => ({
 			id,
 			hooks,
-			version
+			hidden,
+			version,
+			dependencies,
+			settingsUI
 		}))
 		const uiSettings = {
 			pages: [],
 			sidebar: [],
 			sections: [],
+			components:[],
 			...merge.all(pluginInstances.map(plugin => plugin.settingsUI || {}))
 		}
 

@@ -3,18 +3,21 @@ type AdminSection {
 	heading: String
 	description: String
 	settings: [String]
+	component: String
 }
 
 type Link {
 	text: String
-	pageName: String
+	pageId: String
 }
 
 type AdminPage {
 	id: String
+	path: String
 	heading: String
 	description: String
 	settings: [String]
+	component: String
 }
 
 type SettingsConfiguration {
@@ -26,18 +29,35 @@ type SettingsConfiguration {
 	choices: [Any]
 	keyValueType: String
 	listType: String
+	component: String
+}
+
+type Component {
+	path: String
+	name: String
 }
 
 type UISetting {
 	sidebar: [Link]
 	pages: [AdminPage]
 	sections: [AdminSection]
+	components: [Component]
+}
+
+type Plugin {
+	id:String
+	hidden:Boolean
+	hooks:Any
+	version:String
+	dependencies:Any
+	settingsUI:Any
 }
 
 type ServerState {
 	settings: [SettingsConfiguration]
 	uiSettings: UISetting
 	config: Any
+	plugins: [Plugin]
 }
 
 type Query {

@@ -2,6 +2,7 @@ import { Plugin, Server } from '@dreamsaas/types'
 
 export default class SetupPlugin implements Plugin {
 	id = 'setup'
+	hidden=true
 
 	created(server: Server) {
 		server.setup = async () => {

@@ -1,12 +1,12 @@
 <template>
-	<div v-if="pageSettings">
+	<div v-if="pageSettings" class="min-h-full">
 		<BaseHeading v-if="pageSettings.heading">{{
 			pageSettings.heading
 		}}</BaseHeading>
 		<p v-if="pageSettings.description" class="pb-3">
 			{{ pageSettings.description }}
 		</p>
-
+		<div v-if="pageSettings.component" :is="pageSettings.component"/>
 		<div v-if="pageSettings.settings">
 			<SettingInput
 				v-for="settingId in pageSettings.settings"

@@ -13,41 +13,6 @@
 			</ApolloMutation>
 			<BaseButton class="mr-4">Stop</BaseButton>
 			<BaseButton class="mr-4">Reload</BaseButton>
-			<BaseButton class="mr-4" @click="tryImport">get component</BaseButton>
-			<div v-if="component" :is="component" />
 		</div>
 	</header>
 </template>
-<script lang="ts">
-import Vue from 'vue'
-import gql from 'graphql-tag'
-
-export default Vue.extend({
-	data() {
-		return {
-			component: null
-		}
-	},
-	methods: {
-		async tryImport() {
-			const response = await this.$apollo.query({
-				query: gql`
-					query getComponent($path: String!) {
-						getComponent(path: $path)
-					}
-				`,
-				variables: {
-					path: './src/plugins/mycustomcomponent.vue'
-				}
-			})
-
-			const result = new Function(`
-				${response.data.getComponent}
-				return lib
-			`)()
-
-			this.component = result.default
-		}
-	}
-})
-</script>

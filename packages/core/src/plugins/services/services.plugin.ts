@@ -3,6 +3,7 @@ import { ContainerService } from './container-service'
 
 export class ServicesPlugin implements Plugin {
 	public id = 'services'
+	hidden=true
 
 	containerService: ContainerService
 

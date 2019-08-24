@@ -26,21 +26,33 @@ export default class UIPlugin implements Plugin {
 		}
 	]
 	settingsUI: PluginSettingsUI = {
+		components:[{
+			name:'PluginsPage',
+			path:'@dreamsaas/ui/src/components/PluginsPage.vue'
+		}],
 		pages: [
 			{
-				id: '/server',
+				id: 'server-settings',
+				path:'/server-setting',
 				heading: 'Server Settings',
 				description: `Settings for the main server process.`,
 				settings: ['app-name', 'log-level']
+			},
+			{
+				id:'plugins',
+				path:'/plugins',
+				heading:'Plugins',
+				description:'Plugins attached to this project',
+				component:'PluginsPage'
 			}
 		],
 		sidebar: [
 			{
-				pageName: '/server',
+				pageId: 'server-settings',
 				text: 'Server Settings'
 			},
 			{
-				pageName: '/plugins',
+				pageId: 'plugins',
 				text: 'Plugins'
 			}
 		]

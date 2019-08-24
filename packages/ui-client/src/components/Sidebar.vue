@@ -5,11 +5,11 @@
 				<li
 					class="block border-gray-700 border-b"
 					v-for="item in $store.state.serverState.uiSettings.sidebar"
-					:key="item.pageName"
+					:key="item.pageId"
 				>
 					<button
 						class="block px-6 py-3 hover:bg-gray-700 w-full text-left"
-						@click="$router.push({ name: item.pageName })"
+						@click="$router.push({ name: item.pageId })"
 					>
 						{{ item.text }}
 					</button>

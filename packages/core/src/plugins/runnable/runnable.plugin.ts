@@ -10,6 +10,7 @@ export const hooks = {
 }
 export class RunnablePlugin implements Plugin {
 	public id = 'runnable'
+	hidden=true
 
 	public hooks = hooks
 

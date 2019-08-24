@@ -4,6 +4,7 @@ import { SettingsService } from './settings.service'
 export default class SettingsPlugin implements Plugin {
 	id = 'settings'
 	server: Server
+	hidden=true
 
 	created(server: Server, options) {
 		if (!server.config.settings) server.config.settings = {}
