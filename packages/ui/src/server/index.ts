@@ -14,7 +14,14 @@ export const run = async () => {
 	console.log('Starting at project location', projectLocation)
 	const server = new ApolloServer({
 		schema: generateSchema(),
-		playground: true
+		playground: {
+			title:'DreamSaaS Admin',
+			settings:{
+				"general.betaUpdates":true,
+			},
+			workspaceName:'DreamSaaS'
+		},
+		tracing:true
 	})
 
 	const app = express()
