@@ -26,6 +26,7 @@
   "dependencies": {
     "@dreamsaas/core": "^0.0.0",
     "@dreamsaas/ui": "^0.0.0",
-    "@types/node": "^12.7.1"
+    "@types/node": "^12.7.1",
+    "rxjs": "^6.5.2"
   }
 }

@@ -1,75 +1,74 @@
 {
-  "name": "@dreamsaas/ui",
-  "version": "0.0.0",
-  "description": "> TODO: description",
-  "author": "John H Horton <johnhhorton@outlook.com>",
-  "homepage": "https://github.com/dreamsaassaas/playground#readme",
-  "license": "ISC",
-  "main": "./src/ui.ts",
-  "types": "./src/types/index.d.ts",
-  "bin": {
-    "dreamsaas": "bin/dreamsaas"
-  },
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "bin",
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dreamsaassaas/playground.git"
-  },
-  "scripts": {
-    "bin": "./bin/dreamsaas",
-    "start": "ts-node src/ui.ts",
-    "start:dev": "nodemon",
-    "client:serve": "cd client && npm run serve",
-    "client:build": "cd client && npm run build",
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "tsc": "tsc",
-    "tsc:watch": "tsc --watch"
-  },
-  "dependencies": {
-    "@dreamsaas/core": "^0.0.0",
-    "@dreamsaas/fastify": "^0.0.0",
-    "@dreamsaas/model": "^0.0.0",
-    "@types/express": "^4.17.0",
-    "@types/graphql": "^14.2.3",
-    "@types/memory-fs": "^0.3.2",
-    "@types/node": "^12.0.0",
-    "@types/webpack": "^4.32.2",
-    "apollo-server": "^2.8.1",
-    "apollo-server-fastify": "^2.5.0",
-    "chokidar": "^3.0.2",
-    "commander": "^2.20.0",
-    "cors": "^2.8.5",
-    "deepmerge": "^4.0.0",
-    "express": "^4.17.1",
-    "fastify": "^2.3.0",
-    "fastify-static": "^2.4.0",
-    "glob": "^7.1.4",
-    "graphql": "^14.4.2",
-    "jest": "^24.8.0",
-    "memory-fs": "^0.4.1",
-    "merge-graphql-schemas": "^1.7.0",
-    "nodemon": "^1.19.1",
-    "tailwindcss": "^1.0.1",
-    "ts-jest": "^24.0.2",
-    "ts-node": "^8.1.0",
-    "typescript": "^3.4.5",
-    "webpack": "^4.39.2",
-    "yargs": "^13.2.4"
-  },
-  "bugs": {
-    "url": "https://github.com/dreamsaassaas/playground/issues"
-  },
-  "devDependencies": {
-    "css-loader": "^3.2.0",
-    "vue-loader": "^15.7.1",
-    "vue-style-loader": "^4.1.2",
-    "vue-template-compiler": "^2.6.10"
-  }
+	"name": "@dreamsaas/ui",
+	"version": "0.0.0",
+	"description": "> TODO: description",
+	"author": "John H Horton <johnhhorton@outlook.com>",
+	"homepage": "https://github.com/dreamsaassaas/playground#readme",
+	"license": "ISC",
+	"main": "./src/ui.ts",
+	"types": "./src/types/index.d.ts",
+	"bin": {
+		"dreamsaas": "bin/dreamsaas"
+	},
+	"directories": {
+		"lib": "lib",
+		"test": "__tests__"
+	},
+	"files": [
+		"bin",
+		"lib"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dreamsaassaas/playground.git"
+	},
+	"scripts": {
+		"bin": "./bin/dreamsaas",
+		"start": "ts-node src/ui.ts",
+		"start:dev": "nodemon",
+		"client:serve": "cd client && npm run serve",
+		"client:build": "cd client && npm run build",
+		"test": "echo \"Error: run tests from root\" && exit 1",
+		"tsc": "tsc",
+		"tsc:watch": "tsc --watch"
+	},
+	"dependencies": {
+		"@dreamsaas/core": "^0.0.0",
+		"@dreamsaas/fastify": "^0.0.0",
+		"@dreamsaas/model": "^0.0.0",
+		"@types/express": "^4.17.1",
+		"@types/graphql": "^14.2.3",
+		"@types/memory-fs": "^0.3.2",
+		"@types/node": "^12.0.0",
+		"@types/webpack": "^4.32.2",
+		"apollo-server": "^2.8.1",
+		"apollo-server-express": "^2.9.0",
+		"chokidar": "^3.0.2",
+		"commander": "^2.20.0",
+		"cors": "^2.8.5",
+		"deepmerge": "^4.0.0",
+		"express": "^4.17.1",
+		"glob": "^7.1.4",
+		"graphql": "^14.4.2",
+		"is-windows": "^1.0.2",
+		"jest": "^24.8.0",
+		"memory-fs": "^0.4.1",
+		"merge-graphql-schemas": "^1.7.0",
+		"nodemon": "^1.19.1",
+		"tailwindcss": "^1.0.1",
+		"ts-jest": "^24.0.2",
+		"ts-node": "^8.1.0",
+		"typescript": "^3.4.5",
+		"webpack": "^4.39.2",
+		"yargs": "^13.2.4"
+	},
+	"bugs": {
+		"url": "https://github.com/dreamsaassaas/playground/issues"
+	},
+	"devDependencies": {
+		"css-loader": "^3.2.0",
+		"vue-loader": "^15.7.1",
+		"vue-style-loader": "^4.1.2",
+		"vue-template-compiler": "^2.6.10"
+	}
 }

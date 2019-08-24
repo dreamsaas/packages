@@ -6,7 +6,7 @@ export const generateSchema = () => {
 	const pathToModules = path.join(__dirname, '../modules')
 
 	const graphqlTypes = fileLoader(`${pathToModules}/**/*.graphql`)
-	const resolverFiles = fileLoader(`${pathToModules}/**/resolvers.ts`)
+	const resolverFiles = fileLoader(`${pathToModules}/**/*.resolvers.ts`)
 
 	return makeExecutableSchema({
 		typeDefs: mergeTypes(graphqlTypes, { all: true }),

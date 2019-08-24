@@ -5,6 +5,7 @@
 		"noImplicitAny": false,
 		"esModuleInterop": true,
 		"strictNullChecks": false,
+		"preserveSymlinks": true,
 		"types": ["@dreamsaas/core"]
 	},
 	"include": ["./src/**/*"]

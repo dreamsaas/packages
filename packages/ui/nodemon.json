@@ -1,5 +1,5 @@
 {
 	"ext": "js,json,ts,graphql",
 	"watch": ["./src/**/*"],
-	"exec": "ts-node ./src/server/index.ts"
+	"exec": "ts-node --project tsconfig.json ./src/server/index.ts"
 }

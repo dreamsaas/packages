@@ -20,7 +20,8 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import axios from 'axios'
+import gql from 'graphql-tag'
+
 export default Vue.extend({
 	data() {
 		return {
@@ -29,26 +30,23 @@ export default Vue.extend({
 	},
 	methods: {
 		async tryImport() {
-			// require('systemjs/dist/system')
-			// //@ts-ignore
-			// const imported = await window['System'].import(
-			// 	/* webpackIgnore:true */ `http://localhost:3003/get-component`
-			// )
-			// const imported = await import(
-			// 	//@ts-ignore
-			// 	/* webpackIgnore:true */ `http://localhost:3003/get-component`
-			// )
+			const response = await this.$apollo.query({
+				query: gql`
+					query getComponent($path: String!) {
+						getComponent(path: $path)
+					}
+				`,
+				variables: {
+					path: './src/plugins/mycustomcomponent.vue'
+				}
+			})
 
-			// console.log(imported)
-			const response = await axios.get(`http://localhost:3003/get-component`)
-			// console.log(response.data)
 			const result = new Function(`
-				${response.data}
+				${response.data.getComponent}
 				return lib
 			`)()
+
 			this.component = result.default
-			// result.default()
-			console.log(result)
 		}
 	}
 })

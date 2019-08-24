@@ -1,4 +1,5 @@
 import { Server } from '@dreamsaas/types'
+import * as fs from 'fs'
 import * as path from 'path'
 import { UIService } from '../../../ui.service'
 import {
@@ -7,10 +8,9 @@ import {
 	watchFiles
 } from '../project-manager'
 import { pubsub, PUBSUB_HOOKS_CHANGED, SERVER_STATE } from '../pubsub'
-import * as fs from 'fs'
-import webpack from 'webpack'
-const vueloader = require('vue-loader')
+
 let server: Server
+
 export default {
 	Query: {
 		async serverState() {
@@ -43,10 +43,8 @@ export default {
 			const { run } = getServerRunner(
 				path.join(getProjectLocation(), '/src/main.ts')
 			)
+			console.log('got running server')
 			server = await run()
-			pubsub.publish(PUBSUB_HOOKS_CHANGED, {
-				hooksChanged: server.hooks.hooks.map(i => i.id)
-			})
 			return true
 		},
 
@@ -73,10 +71,6 @@ export default {
 					path.join(getProjectLocation(), '/src/main.ts')
 				)
 				server = await run()
-
-				await pubsub.publish(PUBSUB_HOOKS_CHANGED, {
-					hooksChanged: server.hooks.hooks.map(i => i.id)
-				})
 
 				const serverState = server.services
 					.getService<UIService>('ui-service')
