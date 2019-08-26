@@ -18,7 +18,7 @@
     "url": "git+https://github.com/dreamsaas/packages.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "serve":"ts-node ./src/run.ts"
   },
   "bugs": {
     "url": "https://github.com/dreamsaas/packages/issues"
