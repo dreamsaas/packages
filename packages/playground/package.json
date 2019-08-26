@@ -18,7 +18,7 @@
     "url": "git+https://github.com/dreamsaas/packages.git"
   },
   "scripts": {
-    "serve":"ts-node ./src/run.ts"
+    "serve": "ts-node ./src/run.ts"
   },
   "bugs": {
     "url": "https://github.com/dreamsaas/packages/issues"
@@ -27,6 +27,8 @@
     "@dreamsaas/core": "^0.0.0",
     "@dreamsaas/ui": "^0.0.0",
     "@types/node": "^12.7.1",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.5.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
   }
 }
