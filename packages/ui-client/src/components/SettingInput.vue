@@ -4,28 +4,17 @@
 			{{ settingConfig.label }}</label
 		>
 		<p class="pb-2 text-gray-400">{{ settingConfig.description }}</p>
-		<input
+		<BaseInputText
 			v-if="settingConfig.type === 'string'"
-			type="text"
-			class="text-gray-900 rounded px-3 py-1"
-			@input="e => onSettingsChange(e.target.value)"
-			:value="$store.state.config.settings[settingConfig.id]"
+			:value="storeValue"
+			@input="onSettingsChange"
 		/>
-		<select
+		<BaseInputSelect
 			v-if="settingConfig.type === 'choice'"
-			@input="e => onSettingsChange(e.target.value)"
-			:value="$store.state.config.settings[settingConfig.id]"
-			class="text-gray-900 px-3 py-1 rounded"
-		>
-			<option
-				v-for="choice in settingConfig.choices"
-				:key="choice"
-				:value="choice"
-				class="text-gray-900"
-			>
-				{{ choice }}
-			</option>
-		</select>
+			:choices="settingConfig.choices"
+			:value="storeValue"
+			@input="onSettingsChange"
+		/>
 	</div>
 </template>
 <script lang="ts">
@@ -37,11 +26,15 @@ export default Vue.extend({
 	},
 	methods: {
 		onSettingsChange(value) {
-			console.log(value)
 			this.$store.commit('setSetting', {
 				id: this.settingConfig.id,
 				data: value
 			})
+		}
+	},
+	computed: {
+		storeValue() {
+			return this.$store.state.config.settings[this.settingConfig.id]
 		}
 	}
 })

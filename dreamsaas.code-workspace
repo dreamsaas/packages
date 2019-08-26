@@ -13,9 +13,6 @@
       "path": "./packages/model"
     },
     {
-      "path": "./packages/nest-ui"
-    },
-    {
       "path": "./packages/ui"
     },
     {
