@@ -1,5 +1,5 @@
-import { Plugin, Server, Service } from '@dreamsaas/types'
-import * as Fastify from 'fastify'
+import { Plugin, Server, Service, PluginSettingsUI } from '@dreamsaas/types'
+import Fastify from 'fastify'
 
 export const hooks = {}
 
@@ -8,11 +8,13 @@ class FastifyService implements Service {
 	fastify: Fastify.FastifyInstance
 
 	async createServer() {
+		console.log('creating server')
 		this.fastify = Fastify({ logger: false })
 	}
 
 	async start({ port }: { port: number }) {
-		await this.fastify.listen(port)
+		console.log('starting fastify')
+		this.fastify.listen(port)
 	}
 
 	async stop() {
@@ -25,13 +27,41 @@ export class FastifyPlugin implements Plugin {
 
 	hooks = hooks
 	FastifyService: FastifyService
+	settingsUI: PluginSettingsUI = {
+		components: [
+			{
+				name: 'FastifyRoutes',
+				path: '@dreamsaas/fastify/src/components/routes-page.vue'
+			}
+		],
+		pages: [
+			{
+				id: 'routes',
+				path: '/routes',
+				heading: 'Routes',
+				component: 'FastifyRoutes'
+			}
+		],
+		sidebar: [
+			{
+				text: 'Routes',
+				pageId: 'routes'
+			}
+		]
+	}
 
 	async created(server: Server, options) {
+		if (!server.config.http) {
+			server.config.http = { host: '', port: 8000, routes: [] }
+		}
+
 		const fastifyService = new FastifyService()
 		server.services.addService(fastifyService)
 
+		await fastifyService.createServer()
+
 		server.hooks.addHookAction('SERVER_PRE_START', {
-			id: 'start-fastify',
+			id: 'create-fastify',
 			async handler(value, server: Server) {
 				await fastifyService.createServer()
 			}
@@ -40,7 +70,7 @@ export class FastifyPlugin implements Plugin {
 		server.hooks.addHookAction('SERVER_START', {
 			id: 'start-fastify',
 			async handler(value, server: Server) {
-				await fastifyService.start({ port: server.config.http.port || 8000 })
+				fastifyService.start({ port: server.config.http.port || 8000 })
 			}
 		})
 
@@ -50,6 +80,15 @@ export class FastifyPlugin implements Plugin {
 				await fastifyService.stop()
 			}
 		})
+
+		server.hooks.addAction({
+			id: 'fastify-return-explicit-string',
+			type: 'fastify-response',
+			handler(value, server, options) {
+				return options.value
+			},
+			settingsUI: [{}]
+		})
 	}
 
 	async setup(server: Server, options) {
@@ -57,8 +96,12 @@ export class FastifyPlugin implements Plugin {
 	}
 
 	async generateRoutes(server: Server) {
-		const fastify = this.FastifyService.fastify
+		const fastify: Fastify.FastifyInstance = server.services.getService(
+			'fastify'
+		).fastify
+
 		const routes = server.config.http.routes
+
 		routes.forEach(route => {
 			const { method, action, hooks, query, url } = route
 			//Consider rethinking these
@@ -67,12 +110,9 @@ export class FastifyPlugin implements Plugin {
 			const responseHook = `fastify:route:response ${url}`
 
 			// Define hooks
-			server.hooks.addHook({ id: beforeHook, actions: hooks && hooks.pre })
-			server.hooks.addHook({ id: handlerHook, actions: hooks && hooks.handler })
-			server.hooks.addHook({
-				id: responseHook,
-				actions: hooks && hooks.response
-			})
+			server.hooks.addHook({ id: beforeHook })
+			server.hooks.addHook({ id: handlerHook })
+			server.hooks.addHook({ id: responseHook })
 
 			fastify.route({
 				method,

@@ -1,6 +1,8 @@
 import '@dreamsaas/types'
-
-declare module 'dreamsaas' {
+import Plugin from '../fastify'
+import { HookAction } from '@dreamsaas/types'
+export default Plugin
+declare module '@dreamsaas/types' {
 	export interface UrlQuery {
 		[key: string]: {
 			type: string
@@ -13,9 +15,9 @@ declare module 'dreamsaas' {
 		query?: UrlQuery
 		action?: string
 		hooks?: {
-			pre?: string[]
-			handler?: string[]
-			response?: string[]
+			pre?: HookAction[]
+			handler?: HookAction[]
+			response?: HookAction[]
 		}
 	}
 
@@ -25,8 +27,8 @@ declare module 'dreamsaas' {
 		port?: number
 	}
 
-	interface Config {
+	export interface Config {
 		http?: HttpServerConfig
 	}
-	interface Server {}
+	export interface Server {}
 }

@@ -32,6 +32,7 @@ export default {
 				.getService<UIService>('ui-service')
 				.getServerState()
 			await server.stop()
+			console.log('server stopped')
 			server = null
 
 			return serverState
@@ -65,22 +66,30 @@ export default {
 		},
 		async watch() {
 			console.log('starting watch')
+			let interval: any
+
 			watchFiles(path.join(getProjectLocation(), '/src/**/*'), async () => {
-				if (server) server.stop()
-				const { run } = getServerRunner(
-					path.join(getProjectLocation(), '/src/main.ts')
-				)
-				server = await run()
+				if (interval) {
+					clearTimeout(interval)
+					interval = null
+				}
+				interval = setTimeout(async () => {
+					if (server) await server.stop()
+					const { run } = getServerRunner(
+						path.join(getProjectLocation(), '/src/main.ts')
+					)
+					server = await run()
 
-				const serverState = server.services
-					.getService<UIService>('ui-service')
-					.getServerState()
+					const serverState = server.services
+						.getService<UIService>('ui-service')
+						.getServerState()
 
-				await pubsub.publish(SERVER_STATE, {
-					serverState
-				})
+					await pubsub.publish(SERVER_STATE, {
+						serverState
+					})
+				}, 5000)
 
-				server.stop()
+				// server.stop()
 			})
 
 			return true

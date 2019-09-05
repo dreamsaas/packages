@@ -5,8 +5,8 @@
 	"author": "Harry Horton <n0vat3k@gmail.com>",
 	"homepage": "https://github.com/dreamsaassaas/playground#readme",
 	"license": "ISC",
-	"main": "lib/fastify.js",
-	"types": "lib/fastify.d.ts",
+	"main": "src/fastify.ts",
+	"types": "src/types/index.d.ts",
 	"directories": {
 		"lib": "lib",
 		"test": "__tests__"
@@ -28,6 +28,7 @@
 	},
 	"dependencies": {
 		"@dreamsaas/core": "^0.0.0",
+		"@dreamsaas/ui": "^0.0.0",
 		"@types/jest": "^24.0.12",
 		"@types/node": "^12.0.0",
 		"fastify": "^2.3.0",

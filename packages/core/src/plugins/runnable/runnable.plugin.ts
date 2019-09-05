@@ -10,19 +10,21 @@ export const hooks = {
 }
 export class RunnablePlugin implements Plugin {
 	public id = 'runnable'
-	hidden=true
+	hidden = true
 
 	public hooks = hooks
 
 	static SERVER_START = ''
 	created(server: Server) {
 		server.start = async () => {
+			console.log('running start')
 			let result = await server.hooks.runHook(
 				this.hooks.SERVER_BEFORE_START,
 				server
 			)
 			result = await server.hooks.runHook(this.hooks.SERVER_START, result)
 			result = await server.hooks.runHook(this.hooks.SERVER_AFTER_START, result)
+			console.log('running start')
 		}
 
 		server.stop = async () => {

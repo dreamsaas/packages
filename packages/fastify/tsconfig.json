@@ -1,8 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./lib"
-  },
-  "include": ["./src"],
-  "exclude": ["../(?!fastify)"]
+	"compilerOptions": {
+		"outDir": "./lib",
+		"noImplicitAny": false,
+		"esModuleInterop": true,
+		"strictNullChecks": false,
+		"types": ["@dreamsaas/core", "@dreamsaas/ui"]
+	}
 }

@@ -12,10 +12,14 @@ const formatPathForOS = (filePath: string) =>
 const formatPathForNode = (filePath: string) => filePath.replace(/\\/g, '/')
 
 const clearRequireCache = (filePath: string) => {
-	const osFilePath = formatPathForOS(filePath)
-	if (require.cache[osFilePath]) {
-		delete require.cache[osFilePath]
+	// require.cache = {}
+	for (let key in require.cache) {
+		delete require.cache[key]
 	}
+	// const osFilePath = formatPathForOS(filePath)
+	// if (require.cache[osFilePath]) {
+	// 	delete require.cache[osFilePath]
+	// }
 }
 /**
  *

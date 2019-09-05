@@ -1,8 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import Home from '@/views/Home.vue'
-import VueApollo, { ApolloProvider } from 'vue-apollo'
 import gql from 'graphql-tag'
+import Vue from 'vue'
+import { ApolloProvider } from 'vue-apollo'
+import Vuex from 'vuex'
 // import { UIConfig } from './example-config';
 
 Vue.use(Vuex)
@@ -14,7 +13,7 @@ export const storeBuilder = async ({
 }) => {
 	return new Vuex.Store({
 		state: {
-			loading:true,
+			loading: true,
 			config: {
 				settings: {}
 			},
@@ -44,7 +43,10 @@ export const storeBuilder = async ({
 			}
 		},
 		mutations: {
-			loading(state, value){
+			config(state, config: any) {
+				state.config = config
+			},
+			loading(state, value) {
 				state.loading = value
 			},
 			setSetting(state, value: { id: string; data: any }) {

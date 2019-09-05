@@ -1,1 +1,1 @@
-{"settings":{"log-level":"error","app-name":"Test App"}}
+{"settings":{"log-level":"error","app-name":"Test App"},"http":{"host":"","port":8000,"routes":[{"url":"/test","method":"GET"},{"url":"/test2","method":"GET"},{"url":"/test3","method":"GET"},{"url":"/test4","method":"GET"},{"url":"/test5","method":"GET"}]}}

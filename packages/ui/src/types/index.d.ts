@@ -16,11 +16,11 @@ declare module '@dreamsaas/types' {
 		description?: string
 		choices?: any[]
 		keyValueType?: PrimitiveSettingsType
-		listType?: PrimitiveSettingsType,
+		listType?: PrimitiveSettingsType
 		/**
 		 * Vue component name used to override the default.
 		 */
-		component?:string
+		component?: string
 	}
 
 	export interface Link {
@@ -37,7 +37,8 @@ declare module '@dreamsaas/types' {
 		heading?: string
 		description?: string
 		settings?: string[] //setting id
-		component?: string	}
+		component?: string
+	}
 
 	export interface AdminPage {
 		id: string
@@ -51,9 +52,9 @@ declare module '@dreamsaas/types' {
 
 	export interface Component {
 		/** The Path to resolve from the developer's project to get the .vue file */
-		path:string
+		path: string
 		/** Optional name of the component, otherwise will pull from the component's name property */
-		name?:string,
+		name?: string
 	}
 
 	export interface PluginSettingsUI {
@@ -63,11 +64,13 @@ declare module '@dreamsaas/types' {
 		/**
 		 * Vue components to be loaded in to the admin app
 		 */
-		components?:Component[]
+		components?: Component[]
 	}
 
 	export interface ActionSettingsUI {
 		sections?: AdminSection[]
+		/** Human readable name for the action. */
+		name?: string
 	}
 
 	export interface Plugin {
@@ -75,6 +78,9 @@ declare module '@dreamsaas/types' {
 	}
 
 	export interface Action {
+		/* Type of Action. This string is used to filter available actions in the UI Settings */
+		type?: string
+		options: SettingConfiguration[]
 		settingsUI?: ActionSettingsUI[]
 	}
 }

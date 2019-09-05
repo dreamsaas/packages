@@ -2,6 +2,7 @@
 	<select
 		@input="onInput"
 		:value="value"
+		style="border-bottom: 1px solid white"
 		class="text-gray-900 px-3 py-1 rounded"
 	>
 		<option

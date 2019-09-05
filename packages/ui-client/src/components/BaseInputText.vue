@@ -3,7 +3,7 @@
 		type="text"
 		class="text-gray-900 rounded px-3 py-1"
 		:placeholder="placeholder"
-		@input="e => onSettingsChange(e.target.value)"
+		@input="onInput"
 		:value="value"
 	/>
 </template>
