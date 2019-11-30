@@ -1,8 +1,4 @@
-import {
-	Server,
-	Config,
-	ServerContext
-} from '@dreamsaas/types'
+import { Server, Config, ServerContext } from '@dreamsaas/types'
 import { createPlugin } from './plugin'
 import { merge } from '../utils'
 
@@ -35,19 +31,21 @@ declare module '@dreamsaas/types' {
 }
 
 export const useLogger = ({
-	logLevel = 'info',
 	logger: inputLogger
 }: {
-	logger?: (value: any) => any
-	logLevel?: Config['logLevel']
+	logger?: (value: any) => any | false
 } = {}) => (context: ServerContext) => {
 	const defaultLogger = (value: any) => console.log(value)
 
-	const logger = inputLogger || defaultLogger
+	const logger =
+		typeof inputLogger === 'boolean' && inputLogger === false
+			? null
+			: inputLogger || defaultLogger
 
 	return merge(context, { server: { logger } })
 }
 
-export const log = (value: any) => (
-	context: ServerContext
-) => context.server?.logger && context.server.logger(value)
+export const log = (value: any) => (context: ServerContext) => {
+	const logger = context.server?.logger
+	if (logger) logger(value)
+}

@@ -8,8 +8,7 @@
 	"main": "./src/core.ts",
 	"types": "./src/types/index.d.ts",
 	"directories": {
-		"lib": "lib",
-		"test": "__tests__"
+		"lib": "lib"
 	},
 	"files": [
 		"lib"
@@ -20,7 +19,9 @@
 	},
 	"scripts": {
 		"tsc": "rimraf ./lib && tsc && cpy ./src/types ./lib/types",
-		"tsc:watch": "tsc -w"
+		"tsc:watch": "tsc -w",
+		"test": "jest",
+		"start": "ts-node ./src/playground.ts"
 	},
 	"bugs": {
 		"url": "https://github.com/dreamsaas/playground/issues"
@@ -31,15 +32,20 @@
 		"@types/jest": "^24.0.17",
 		"@types/node": "^12.0.0",
 		"@types/ramda": "github:types/npm-ramda#dist",
+		"axios": "^0.19.0",
 		"deepmerge": "^4.0.0",
-		"fastify": "^2.3.0",
-		"jest": "^24.8.0",
+		"fastify": "^2.10.0",
+		"jest": "^24.9.0",
+		"lodash": "^4.17.15",
+		"prettier": "^1.19.1",
 		"rambda": "^2.11.1",
 		"rimraf": "^2.6.3",
-		"ts-jest": "^24.0.2",
+		"rxjs": "^6.5.3",
+		"supertest": "4.0.1",
+		"ts-jest": "^24.2.0",
 		"ts-node": "^8.1.0",
 		"typeorm": "^0.2.17",
-		"typescript": "^3.4.5"
+		"typescript": "^3.7.2"
 	},
 	"devDependencies": {
 		"cpy-cli": "^2.0.0"

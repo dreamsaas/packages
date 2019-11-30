@@ -2,13 +2,14 @@ import { createServer } from '../create-server'
 import {
 	usePlugins,
 	createPlugin,
-	requirePluginContext,
 	onPluginCreated,
 	onPluginSetup,
 	onPluginRun,
 	onPluginStop
 } from './plugin'
 import { debug } from './debug'
+import { setupService } from './services'
+import { runServer, stopServer, setupServer } from './lifecycle'
 
 describe('plugin', () => {
 	it('should add plugins to server', async () => {
@@ -57,35 +58,11 @@ describe('plugin', () => {
 		expect(context.server.plugins[0].name).toBe('name')
 	})
 
-	it('should requirePluginContext', async () => {
-		const pluginOperator = () =>
-			requirePluginContext((context: any) => {
-				//check that the function was called
-				expect(context.plugin.id).toBe('id')
-			})
-
-		const myPlugin = () =>
-			createPlugin({ id: 'id' })(pluginOperator())
-
-		await createServer()(myPlugin())
-
-		expect(true).toBe(true) // should get here without throw
-
-		// try operator without plugin context
-		try {
-			await createServer()(pluginOperator())
-		} catch (error) {
-			expect(error.message).toContain('storePlugin')
-		}
-
-		expect.assertions(3)
-	})
-
 	it('should inject lifecycle hooks', async () => {
-		const created = () => 'created'
-		const setup = () => 'setup'
-		const run = () => 'run'
-		const stop = () => 'stop'
+		const created = jest.fn()
+		const setup = jest.fn()
+		const run = jest.fn()
+		const stop = jest.fn()
 
 		const myPlugin = () =>
 			createPlugin({ id: 'id' })(
@@ -95,14 +72,17 @@ describe('plugin', () => {
 				onPluginStop(stop)
 			)
 
-		const { server } = await createServer()(myPlugin())
+		const { server } = await createServer()(
+			myPlugin(),
+			setupServer(),
+			runServer(),
+			stopServer()
+		)
 
-		const plugin = server.plugins[0]
-
-		expect(plugin.created()).toBe('created')
-		expect(plugin.setup()).toBe('setup')
-		expect(plugin.run()).toBe('run')
-		expect(plugin.stop()).toBe('stop')
+		expect(created).toBeCalledTimes(1)
+		expect(setup).toBeCalledTimes(1)
+		expect(run).toBeCalledTimes(1)
+		expect(stop).toBeCalledTimes(1)
 	})
 
 	it('should run plugin created lifecylce hook', async () => {
@@ -114,8 +94,7 @@ describe('plugin', () => {
 			expect(context.plugin.id).toBe('id')
 		}
 
-		const myPlugin = () =>
-			createPlugin({ id: 'id' })(onPluginCreated(created))
+		const myPlugin = () => createPlugin({ id: 'id' })(onPluginCreated(created))
 
 		const { server } = await createServer()(myPlugin())
 		order.push('finished')

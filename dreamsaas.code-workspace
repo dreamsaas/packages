@@ -25,6 +25,7 @@
   "settings": {
     "workbench.colorCustomizations": {},
     "jest.pathToJest": "npm test --",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "typescript.tsdk": "core/node_modules/typescript/lib"
   }
 }

@@ -6,11 +6,7 @@ import {
 	onPluginStop
 } from './plugin'
 import { createServer } from '../create-server'
-import {
-	setupServer,
-	runServer,
-	stopServer
-} from './lifecycle'
+import { setupServer, runServer, stopServer } from './lifecycle'
 import { merge } from '../utils'
 
 describe('lifecycle', () => {
@@ -30,9 +26,9 @@ describe('lifecycle', () => {
 
 		const context = await createServer()(
 			myPlugin(),
-			setupServer,
-			runServer,
-			stopServer
+			setupServer(),
+			runServer(),
+			stopServer()
 		)
 
 		expect(setup).toBeCalled()

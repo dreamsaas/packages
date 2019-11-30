@@ -1,17 +1,16 @@
+import { RouteContext, ServerContext } from '@dreamsaas/types'
+import Fastify from 'fastify'
+import { addContext, fromContext } from '../operators/context'
 import {
 	createPlugin,
-	onPluginRun,
 	onPluginCreated,
-	onPluginSetup
+	onPluginRun,
+	onPluginSetup,
+	onPluginStop
 } from '../operators/plugin'
-import {
-	ServerContext,
-	RouteContext
-} from '@dreamsaas/types'
-import Fastify, { FastifyInstance } from 'fastify'
+import { runService, setupService, stopService } from '../operators/services'
 import { merge, pipe } from '../utils'
-import { log } from '../operators/loggable'
-import { addContext } from '../operators/context'
+import { useFastifyService } from './fastify.service'
 
 declare module '@dreamsaas/types' {
 	export interface Config {
@@ -20,25 +19,26 @@ declare module '@dreamsaas/types' {
 		}
 	}
 
-	export interface Server {
-		fastify?: FastifyInstance
-	}
-
 	export interface RouteContext extends ServerContext {
 		request: Fastify.FastifyRequest
 		reply: Fastify.FastifyReply<any>
 	}
 }
 
-const convertRouteHandler = (handler: Function) =>
-	pipe(handler)
+const convertRouteHandler = (handler: Function) => pipe(handler)
+
+export const sendFromContext = (accessor: any) => async (
+	context: RouteContext
+) => {
+	const value = await fromContext(accessor)(context)
+
+	return context.reply.send(value)
+}
 
 export const addRoute = (route: Fastify.RouteOptions) => (
 	context: ServerContext
 ) => {
-	const convertedHandler = convertRouteHandler(
-		route.handler
-	)
+	const convertedHandler = convertRouteHandler(route.handler)
 	return merge(context, {
 		server: {
 			config: {
@@ -50,59 +50,15 @@ export const addRoute = (route: Fastify.RouteOptions) => (
 	})
 }
 
-const applyRoutes = () => (context: ServerContext) => {
-	context.server.config?.fastify?.routes?.forEach(route => {
-		context.server.fastify?.route({
-			...route,
-			async handler(request, reply) {
-				return route.handler(
-					merge(context, { request, reply })
-				)
-			}
-		})
-	})
-}
-
-const runFastify = () => (context: ServerContext) => {
-	context.server.fastify?.listen(3000)
-}
-
-const send = (value: any) => async (
-	context: RouteContext
-) => {
-	const isFunc = typeof value === 'function'
-	if (isFunc) {
-		return context.reply.send(await value(context))
-	}
-	return context.reply.send(value)
-}
-
-export const useFastify = createPlugin({ id: 'fastify' })(
-	onPluginCreated(
-		pipe(
+export const useFastify = () =>
+	createPlugin({ id: 'fastify' })(
+		onPluginCreated(
 			addContext({
 				server: { config: { fastify: { routes: [] } } }
-			})
-		)
-	),
-	onPluginSetup(
-		pipe(
-			addRoute({
-				url: '/',
-				method: 'GET',
-				handler: pipe(
-					// validate(),
-					// getModel((context:ServerContext)=>),
-					send('hello world')
-				)
-			})
-		)
-	),
-	onPluginRun(
-		pipe(
-			log('Starting Fastify'),
-			applyRoutes(),
-			runFastify()
-		)
+			}),
+			useFastifyService()
+		),
+		onPluginSetup(setupService('fastify')),
+		onPluginRun(runService('fastify')),
+		onPluginStop(stopService('fastify'))
 	)
-)

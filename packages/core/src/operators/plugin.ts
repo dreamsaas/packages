@@ -1,13 +1,18 @@
 import { pipe, merge, invertedPipe } from '../utils'
-import { Plugin, ServerContext } from '@dreamsaas/types'
-import { addContext, clearContext } from './context'
+import { Plugin, ServerContext, PluginContext } from '@dreamsaas/types'
+import { addContext, removeContext, requireContext } from './context'
 
 declare module '@dreamsaas/types' {
 	export interface Plugin {
 		id: string
+		created?: (context: ServerContext) => ServerContext
 		setup?: (context: ServerContext) => ServerContext
 		run?: (context: ServerContext) => void
 		stop?: (context: ServerContext) => void
+	}
+
+	export interface PluginContext extends ServerContext {
+		plugin: Plugin
 	}
 
 	export interface Server {
@@ -18,53 +23,49 @@ declare module '@dreamsaas/types' {
 export const usePlugins = () => (context: ServerContext) =>
 	merge(context, { server: { plugins: [] } })
 
-export const requirePluginContext = (func: Function) => (context: any) => {
-	if (!context.plugin)
-		throw new Error('storePlugin must be called within plugin context.')
-	return func(context)
-}
-
 export const storePlugin = () =>
-	requirePluginContext((context: ServerContext & { plugin: any }) => {
-		return merge(context, { server: { plugins: [context.plugin] } })
-	})
+	requireContext('service', 'onServiceSetup', (context: PluginContext) =>
+		merge(context, { server: { plugins: [context.plugin] } })
+	)
 
-export const onPluginCreated = (func: Function) =>
-	requirePluginContext(async (context: any) => {
-		return merge(context, { plugin: { created: func } })
-	})
+export const onPluginCreated = (...funcs: Function[]) =>
+	requireContext('plugin', 'onPluginCreated', (context: PluginContext) =>
+		merge(context, { plugin: { created: pipe(...funcs) } })
+	)
 
-export const onPluginSetup = (func: Function) =>
-	requirePluginContext(async (context: any) => {
-		return merge(context, { plugin: { setup: func } })
-	})
+export const onPluginSetup = (...funcs: Function[]) =>
+	requireContext('plugin', 'onPluginSetup', (context: PluginContext) =>
+		merge(context, { plugin: { setup: pipe(...funcs) } })
+	)
 
-export const onPluginRun = (func: Function) =>
-	requirePluginContext(async (context: any) => {
-		return merge(context, { plugin: { run: func } })
-	})
+export const onPluginRun = (...funcs: Function[]) =>
+	requireContext('plugin', 'onPluginRun', (context: PluginContext) =>
+		merge(context, { plugin: { run: pipe(...funcs) } })
+	)
 
-export const onPluginStop = (func: Function) =>
-	requirePluginContext(async (context: any) => {
-		return merge(context, { plugin: { stop: func } })
-	})
+export const onPluginStop = (...funcs: Function[]) =>
+	requireContext('plugin', 'onPluginStop', (context: PluginContext) =>
+		merge(context, { plugin: { stop: pipe(...funcs) } })
+	)
 
 export const runPluginCreated = () =>
-	requirePluginContext(async (context: any) => {
-		if (typeof context.plugin.created === 'function') {
-			await context.plugin.created(context)
+	requireContext(
+		'plugin',
+		'runPluginCreated',
+		async (context: PluginContext) => {
+			if (typeof context.plugin.created === 'function') {
+				return await context.plugin.created(context)
+			}
 		}
-	})
-
-export const addPluginContext = (plugin: Plugin) => addContext({ plugin })
+	)
 
 export const createPlugin = (plugin: Plugin) => (...funcs: Function[]) => (
 	context: ServerContext
 ) =>
 	pipe(
-		addPluginContext(plugin),
+		addContext({ plugin }),
 		...funcs,
 		storePlugin(),
 		runPluginCreated(),
-		clearContext()
+		removeContext('plugin')
 	)(context)

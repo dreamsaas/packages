@@ -1,20 +1,25 @@
-import { Hook, Action } from '@dreamsaas/types'
+import request from 'supertest'
+import { pipe } from '..'
 import { createServer } from '../create-server'
-import {
-	addHook,
-	addHookAction,
-	runHook
-} from '../operators/hooks'
-import { addAction } from '../operators/actions'
+import { fromContext } from '../operators/context'
+import { runServer, setupServer, stopServer } from '../operators/lifecycle'
+import { addRoute, useFastify } from './fastify'
 
-describe('hooks', () => {
-	it('should add hook', async () => {
-		const hook: Hook = {
-			id: 'theid'
-		}
-
-		const context = await createServer()(addHook(hook))
-
-		expect(context.server.hooks[0]).toMatchObject(hook)
+describe('fastify plugin', () => {
+	let context: any
+	it('should add route', async () => {
+		context = await createServer()(
+			useFastify(),
+			addRoute({
+				url: '/',
+				method: 'GET',
+				handler: pipe(fromContext((context: any) => context.request.query))
+			}),
+			setupServer(),
+			runServer()
+		)
+		const response = await request('localhost:3000').get('/?id=1')
+		await stopServer()(context)
+		expect(response.body).toMatchObject({ id: '1' })
 	})
 })

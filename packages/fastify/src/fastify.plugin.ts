@@ -8,12 +8,10 @@ class FastifyService implements Service {
 	fastify: Fastify.FastifyInstance
 
 	async createServer() {
-		console.log('creating server')
 		this.fastify = Fastify({ logger: false })
 	}
 
 	async start({ port }: { port: number }) {
-		console.log('starting fastify')
 		this.fastify.listen(port)
 	}
 
