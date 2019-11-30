@@ -37,24 +37,24 @@ const storeService = () =>
 		})
 	)
 
-export const onServiceCreated = (func: Function) =>
+export const onServiceCreated = (...funcs: Function[]) =>
 	requireContext('service', 'onServiceCreated', (context: ServiceContext) =>
-		merge(context, { service: { created: func } })
+		merge(context, { service: { created: pipe(...funcs) } })
 	)
 
-export const onServiceSetup = (func: Function) =>
+export const onServiceSetup = (...funcs: Function[]) =>
 	requireContext('service', 'onServiceSetup', (context: ServiceContext) =>
-		merge(context, { service: { setup: func } })
+		merge(context, { service: { setup: pipe(...funcs) } })
 	)
 
-export const onServiceRun = (func: Function) =>
+export const onServiceRun = (...funcs: Function[]) =>
 	requireContext('service', 'onServiceRun', (context: ServiceContext) =>
-		merge(context, { service: { run: func } })
+		merge(context, { service: { run: pipe(...funcs) } })
 	)
 
-export const onServiceStop = (func: Function) =>
+export const onServiceStop = (...funcs: Function[]) =>
 	requireContext('service', 'onServiceStop', (context: ServiceContext) =>
-		merge(context, { service: { stop: func } })
+		merge(context, { service: { stop: pipe(...funcs) } })
 	)
 export const runServiceCreated = () =>
 	requireContext(

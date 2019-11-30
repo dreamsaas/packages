@@ -1,6 +1,6 @@
 import { RouteContext, ServerContext } from '@dreamsaas/types'
 import Fastify from 'fastify'
-import { addContext, fromContext } from '../operators/context'
+import { addContext, fromContext, addToConfig } from '../operators/context'
 import {
 	createPlugin,
 	onPluginCreated,
@@ -53,9 +53,7 @@ export const addRoute = (route: Fastify.RouteOptions) => (
 export const useFastify = () =>
 	createPlugin({ id: 'fastify' })(
 		onPluginCreated(
-			addContext({
-				server: { config: { fastify: { routes: [] } } }
-			}),
+			addToConfig({ fastify: { routes: [] } }),
 			useFastifyService()
 		),
 		onPluginSetup(setupService('fastify')),

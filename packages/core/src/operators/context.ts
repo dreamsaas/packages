@@ -39,6 +39,14 @@ export const requireContext = (
 export const addContext = (newContext: {}) => (currentContext: ServerContext) =>
 	merge(currentContext, newContext)
 
+export const addToConfig = (newContext: {}) => (
+	currentContext: ServerContext
+) => merge(currentContext, { server: { config: newContext } })
+
+export const addToServer = (newContext: {}) => (
+	currentContext: ServerContext
+) => merge(currentContext, { server: newContext })
+
 export const removeContext = (key: string | string[]) => (
 	currentContext: ServerContext
 ) => {
