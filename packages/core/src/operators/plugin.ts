@@ -20,38 +20,43 @@ declare module '@dreamsaas/types' {
 	}
 }
 
-export const usePlugins = () => (context: ServerContext) =>
-	merge(context, { server: { plugins: [] } })
+export const usePlugins = () => pipe(addContext({ server: { plugins: [] } }))
 
 export const storePlugin = () =>
-	requireContext('service', 'onServiceSetup', (context: PluginContext) =>
-		merge(context, { server: { plugins: [context.plugin] } })
+	pipe(
+		requireContext('plugin', 'storePlugin'),
+		addContext((context: PluginContext) => ({
+			server: { plugins: [context.plugin] }
+		}))
 	)
 
 export const onPluginCreated = (...funcs: Function[]) =>
-	requireContext('plugin', 'onPluginCreated', (context: PluginContext) =>
-		merge(context, { plugin: { created: pipe(...funcs) } })
+	pipe(
+		requireContext('plugin', 'onPluginCreated'),
+		addContext({ plugin: { created: pipe(...funcs) } })
 	)
 
 export const onPluginSetup = (...funcs: Function[]) =>
-	requireContext('plugin', 'onPluginSetup', (context: PluginContext) =>
-		merge(context, { plugin: { setup: pipe(...funcs) } })
+	pipe(
+		requireContext('plugin', 'onPluginSetup'),
+		addContext({ plugin: { setup: pipe(...funcs) } })
 	)
 
 export const onPluginRun = (...funcs: Function[]) =>
-	requireContext('plugin', 'onPluginRun', (context: PluginContext) =>
-		merge(context, { plugin: { run: pipe(...funcs) } })
+	pipe(
+		requireContext('plugin', 'onPluginRun'),
+		addContext({ plugin: { run: pipe(...funcs) } })
 	)
 
 export const onPluginStop = (...funcs: Function[]) =>
-	requireContext('plugin', 'onPluginStop', (context: PluginContext) =>
-		merge(context, { plugin: { stop: pipe(...funcs) } })
+	pipe(
+		requireContext('plugin', 'onPluginStop'),
+		addContext({ plugin: { stop: pipe(...funcs) } })
 	)
 
 export const runPluginCreated = () =>
-	requireContext(
-		'plugin',
-		'runPluginCreated',
+	pipe(
+		requireContext('plugin', 'runPluginCreated'),
 		async (context: PluginContext) => {
 			if (typeof context.plugin.created === 'function') {
 				return await context.plugin.created(context)

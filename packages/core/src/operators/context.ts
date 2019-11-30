@@ -13,8 +13,7 @@ export const convertToServerContext = () => (server: {}): ServerContext => ({
 
 export const requireContext = (
 	requiredContextKeys: string | string[],
-	operatorName: string,
-	func: Function
+	operatorName: string
 ) => (context: any) => {
 	const keys = Array.isArray(requiredContextKeys)
 		? requiredContextKeys
@@ -32,12 +31,14 @@ export const requireContext = (
 			)}.`
 		)
 	}
-
-	return func(context)
 }
 
-export const addContext = (newContext: {}) => (currentContext: ServerContext) =>
-	merge(currentContext, newContext)
+export const addContext = (newContext: {} | Function) => (
+	currentContext: ServerContext
+) => {
+	let func = typeof newContext === 'function' ? newContext : () => newContext
+	return merge(currentContext, func(currentContext))
+}
 
 export const addToConfig = (newContext: {}) => (
 	currentContext: ServerContext

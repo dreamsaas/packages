@@ -31,35 +31,40 @@ export const useServices = () => (context: ServerContext) =>
 	merge(context, { server: { services: {} } })
 
 const storeService = () =>
-	requireContext('service', 'storeService', (context: ServiceContext) =>
-		merge(context, {
+	pipe(
+		requireContext('service', 'storeService'),
+		addContext((context: ServiceContext) => ({
 			server: { services: { [context.service.id]: context.service } }
-		})
+		}))
 	)
 
 export const onServiceCreated = (...funcs: Function[]) =>
-	requireContext('service', 'onServiceCreated', (context: ServiceContext) =>
-		merge(context, { service: { created: pipe(...funcs) } })
+	pipe(
+		requireContext('service', 'onServiceCreated'),
+		addContext({ service: { created: pipe(...funcs) } })
 	)
 
 export const onServiceSetup = (...funcs: Function[]) =>
-	requireContext('service', 'onServiceSetup', (context: ServiceContext) =>
-		merge(context, { service: { setup: pipe(...funcs) } })
+	pipe(
+		requireContext('service', 'onServiceSetup'),
+		addContext({ service: { setup: pipe(...funcs) } })
 	)
 
 export const onServiceRun = (...funcs: Function[]) =>
-	requireContext('service', 'onServiceRun', (context: ServiceContext) =>
-		merge(context, { service: { run: pipe(...funcs) } })
+	pipe(
+		requireContext('service', 'onServiceRun'),
+		addContext({ service: { run: pipe(...funcs) } })
 	)
 
 export const onServiceStop = (...funcs: Function[]) =>
-	requireContext('service', 'onServiceStop', (context: ServiceContext) =>
-		merge(context, { service: { stop: pipe(...funcs) } })
+	pipe(
+		requireContext('service', 'onServiceStop'),
+		addContext({ service: { stop: pipe(...funcs) } })
 	)
+
 export const runServiceCreated = () =>
-	requireContext(
-		'service',
-		'runServiceCreated',
+	pipe(
+		requireContext('service', 'runServiceCreated'),
 		async (context: ServiceContext) => {
 			if (typeof context.service.created === 'function') {
 				return await context.service.created(context)
