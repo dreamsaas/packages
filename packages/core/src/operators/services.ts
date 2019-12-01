@@ -27,8 +27,7 @@ declare module '@dreamsaas/types' {
 	}
 }
 
-export const useServices = () => (context: ServerContext) =>
-	merge(context, { server: { services: {} } })
+export const useServices = () => addContext({ server: { services: {} } })
 
 const storeService = () =>
 	pipe(
@@ -99,13 +98,11 @@ export const stopService = (id: string) => async (context: ServerContext) => {
 	if (func) await func(context)
 }
 
-export const createService = (service: Service) => (...funcs: Function[]) => (
-	context: ServerContext
-) =>
+export const createService = (service: Service) => (...funcs: Function[]) =>
 	pipe(
 		addContext({ service }),
 		...funcs,
 		storeService(),
 		runServiceCreated(),
 		removeContext('service')
-	)(context)
+	)

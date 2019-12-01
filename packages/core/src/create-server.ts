@@ -6,16 +6,12 @@ import { convertToServerContext } from './operators/context'
 import { useActions } from './operators/actions'
 import { useServices } from './operators/services'
 
-export const createServer = (server: Server = {}) => {
-	// Core server includes base operators and plugins
-	const coreServer = pipe(
+export const createServer = (server: Server = {}) => (...funcs: Function[]) =>
+	pipe(
 		convertToServerContext(),
 		applyConfig({}),
 		useServices(),
 		usePlugins(),
-		useActions()
+		useActions(),
+		...funcs
 	)(server)
-
-	// Use inverted pipe to allow chaining on response
-	return invertedPipe(coreServer)
-}

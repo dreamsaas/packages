@@ -1,6 +1,6 @@
 import { RouteContext, ServerContext } from '@dreamsaas/types'
 import Fastify from 'fastify'
-import { addContext, fromContext, addToConfig } from '../operators/context'
+import { addToConfig, fromContext } from '../operators/context'
 import {
 	createPlugin,
 	onPluginCreated,

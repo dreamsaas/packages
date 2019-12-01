@@ -20,7 +20,7 @@ declare module '@dreamsaas/types' {
 	}
 }
 
-export const usePlugins = () => pipe(addContext({ server: { plugins: [] } }))
+export const usePlugins = () => addContext({ server: { plugins: [] } })
 
 export const storePlugin = () =>
 	pipe(
@@ -64,13 +64,11 @@ export const runPluginCreated = () =>
 		}
 	)
 
-export const createPlugin = (plugin: Plugin) => (...funcs: Function[]) => (
-	context: ServerContext
-) =>
+export const createPlugin = (plugin: Plugin) => (...funcs: Function[]) =>
 	pipe(
 		addContext({ plugin }),
 		...funcs,
 		storePlugin(),
 		runPluginCreated(),
 		removeContext('plugin')
-	)(context)
+	)

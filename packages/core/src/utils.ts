@@ -1,13 +1,17 @@
 import { mergeWith, cloneDeepWith } from 'lodash'
 
 export const pipe = (...funcs: Function[]) => {
-	return async <T>(value: T) => {
+	return async <T>(context: T) => {
 		// await value in case it's a promise
 		// This happens when a pipe is passed in
-		let tmpValue = await value
+		let tmpValue = await context
 		for (let func of funcs) {
-			const result = await func(tmpValue)
-			tmpValue = result !== undefined ? result : tmpValue
+			if (typeof func === 'function') {
+				const result = await func(tmpValue)
+				tmpValue = result !== undefined ? result : tmpValue
+			} else {
+				throw new Error(`pipe can only use functions. recieved: ${func}`)
+			}
 		}
 		return tmpValue
 	}
@@ -43,8 +47,7 @@ export const merge = <T, M>(src: T, obj: M): T & M =>
 			obj._type === OBJECT_TYPES.STATE
 		)
 			return obj
-		if (Array.isArray(src) && Array.isArray(obj))
-			return clone([...src, ...obj])
+		if (Array.isArray(src) && Array.isArray(obj)) return clone([...src, ...obj])
 	})
 
 export const isStateful = (value: any) =>
@@ -62,16 +65,8 @@ export const clone = <T>(src: T): T =>
 		}
 	})
 
-export const stringAccessor = (
-	accessor: string | string[],
-	obj: {}
-) => {
-	const properties = Array.isArray(accessor)
-		? accessor
-		: accessor.split('.')
+export const stringAccessor = (accessor: string | string[], obj: {}) => {
+	const properties = Array.isArray(accessor) ? accessor : accessor.split('.')
 
-	return properties.reduce(
-		(prev: any, curr: string) => prev && prev[curr],
-		obj
-	)
+	return properties.reduce((prev: any, curr: string) => prev && prev[curr], obj)
 }

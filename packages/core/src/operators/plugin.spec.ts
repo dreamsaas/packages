@@ -1,15 +1,14 @@
 import { createServer } from '../create-server'
+import { debug } from './debug'
+import { runServer, setupServer, stopServer } from './lifecycle'
 import {
-	usePlugins,
 	createPlugin,
 	onPluginCreated,
-	onPluginSetup,
 	onPluginRun,
-	onPluginStop
+	onPluginSetup,
+	onPluginStop,
+	usePlugins
 } from './plugin'
-import { debug } from './debug'
-import { setupService } from './services'
-import { runServer, stopServer, setupServer } from './lifecycle'
 
 describe('plugin', () => {
 	it('should add plugins to server', async () => {
@@ -72,12 +71,7 @@ describe('plugin', () => {
 				onPluginStop(stop)
 			)
 
-		const { server } = await createServer()(
-			myPlugin(),
-			setupServer(),
-			runServer(),
-			stopServer()
-		)
+		await createServer()(myPlugin(), setupServer(), runServer(), stopServer())
 
 		expect(created).toBeCalledTimes(1)
 		expect(setup).toBeCalledTimes(1)
