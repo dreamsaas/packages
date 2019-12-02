@@ -1,6 +1,12 @@
 import { pipe, merge, invertedPipe } from '../utils'
 import { Plugin, ServerContext, PluginContext } from '@dreamsaas/types'
 import { addContext, removeContext, requireContext } from './context'
+import {
+	generateOnSetupOperator,
+	generateOnRunOperator,
+	generateOnStopOperator,
+	generateOnCreatedOperator
+} from './lifecycle'
 
 declare module '@dreamsaas/types' {
 	export interface Plugin {
@@ -30,29 +36,16 @@ export const storePlugin = () =>
 		}))
 	)
 
-export const onPluginCreated = (...funcs: Function[]) =>
-	pipe(
-		requireContext('plugin', 'onPluginCreated'),
-		addContext({ plugin: { created: pipe(...funcs) } })
-	)
+export const onPluginCreated = generateOnCreatedOperator(
+	'plugin',
+	'onPluginCreated'
+)
 
-export const onPluginSetup = (...funcs: Function[]) =>
-	pipe(
-		requireContext('plugin', 'onPluginSetup'),
-		addContext({ plugin: { setup: pipe(...funcs) } })
-	)
+export const onPluginSetup = generateOnSetupOperator('plugin', 'onPluginSetup')
 
-export const onPluginRun = (...funcs: Function[]) =>
-	pipe(
-		requireContext('plugin', 'onPluginRun'),
-		addContext({ plugin: { run: pipe(...funcs) } })
-	)
+export const onPluginRun = generateOnRunOperator('plugin', 'onPluginRun')
 
-export const onPluginStop = (...funcs: Function[]) =>
-	pipe(
-		requireContext('plugin', 'onPluginStop'),
-		addContext({ plugin: { stop: pipe(...funcs) } })
-	)
+export const onPluginStop = generateOnStopOperator('plugin', 'onPluginStop')
 
 export const runPluginCreated = () =>
 	pipe(

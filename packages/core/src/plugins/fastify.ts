@@ -52,10 +52,8 @@ export const addRoute = (route: Fastify.RouteOptions) => (
 
 export const useFastify = () =>
 	createPlugin({ id: 'fastify' })(
-		onPluginCreated(
-			addToConfig({ fastify: { routes: [] } }),
-			useFastifyService()
-		),
+		addToConfig({ fastify: { routes: [] } }),
+		useFastifyService(),
 		onPluginSetup(setupService('fastify')),
 		onPluginRun(runService('fastify')),
 		onPluginStop(stopService('fastify'))

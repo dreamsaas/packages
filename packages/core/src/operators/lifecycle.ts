@@ -1,8 +1,26 @@
 import { Plugin, ServerContext } from '@dreamsaas/types'
 import { pipe } from '../utils'
 import { log } from './loggable'
+import { addContext, requireContext } from './context'
 
 declare module '@dreamsaas/types' {}
+
+const addLifecycleHook = (hookName: string) => (
+	contextTarget: string,
+	operatorName: string
+) => (...funcs: Function[]) =>
+	pipe(
+		requireContext(contextTarget, operatorName),
+		addContext({ [contextTarget]: { [hookName]: pipe(...funcs) } })
+	)
+
+export const generateOnCreatedOperator = addLifecycleHook('created')
+
+export const generateOnSetupOperator = addLifecycleHook('setup')
+
+export const generateOnRunOperator = addLifecycleHook('run')
+
+export const generateOnStopOperator = addLifecycleHook('stop')
 
 const runPluginSetups = () => async (context: ServerContext) => {
 	const plugins = context?.server?.plugins || []

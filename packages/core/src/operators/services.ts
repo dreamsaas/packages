@@ -6,6 +6,12 @@ import {
 	clearContext,
 	removeContext
 } from './context'
+import {
+	generateOnSetupOperator,
+	generateOnRunOperator,
+	generateOnStopOperator,
+	generateOnCreatedOperator
+} from './lifecycle'
 
 declare module '@dreamsaas/types' {
 	export interface Service {
@@ -37,29 +43,19 @@ const storeService = () =>
 		}))
 	)
 
-export const onServiceCreated = (...funcs: Function[]) =>
-	pipe(
-		requireContext('service', 'onServiceCreated'),
-		addContext({ service: { created: pipe(...funcs) } })
-	)
+export const onServiceCreated = generateOnCreatedOperator(
+	'service',
+	'onServiceCreated'
+)
 
-export const onServiceSetup = (...funcs: Function[]) =>
-	pipe(
-		requireContext('service', 'onServiceSetup'),
-		addContext({ service: { setup: pipe(...funcs) } })
-	)
+export const onServiceSetup = generateOnSetupOperator(
+	'service',
+	'onServiceSetup'
+)
 
-export const onServiceRun = (...funcs: Function[]) =>
-	pipe(
-		requireContext('service', 'onServiceRun'),
-		addContext({ service: { run: pipe(...funcs) } })
-	)
+export const onServiceRun = generateOnRunOperator('service', 'onServiceRun')
 
-export const onServiceStop = (...funcs: Function[]) =>
-	pipe(
-		requireContext('service', 'onServiceStop'),
-		addContext({ service: { stop: pipe(...funcs) } })
-	)
+export const onServiceStop = generateOnStopOperator('service', 'onServiceStop')
 
 export const runServiceCreated = () =>
 	pipe(
