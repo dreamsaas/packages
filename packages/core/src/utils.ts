@@ -1,6 +1,9 @@
 import { mergeWith, cloneDeepWith } from 'lodash'
+export type AnyFunction = (...args: any[]) => any
 
-export const pipe = (...funcs: Function[]) => {
+export function pipe(): void
+export function pipe<T,R>((T):R) R
+export function pipe(...funcs: Array<Function>) {
 	return async <T>(context: T) => {
 		// await value in case it's a promise
 		// This happens when a pipe is passed in
@@ -16,6 +19,10 @@ export const pipe = (...funcs: Function[]) => {
 		return tmpValue
 	}
 }
+
+const my = (...thing: Array<unknown>) => thing
+
+const value = my(1, 'two')
 
 export const invertedPipe = (value?: any) => {
 	return (...funcs: Function[]) => {

@@ -1,2 +1,0 @@
-# Fastify
-*Coming Soon...*
