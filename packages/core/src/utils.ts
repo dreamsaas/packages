@@ -1,28 +1,17 @@
 import { mergeWith, cloneDeepWith } from 'lodash'
-export type AnyFunction = (...args: any[]) => any
 
-export function pipe(): void
-export function pipe<T,R>((T):R) R
-export function pipe(...funcs: Array<Function>) {
-	return async <T>(context: T) => {
+export const pipe = (...funcs: Function[]) => {
+	return async <T>(value: T) => {
 		// await value in case it's a promise
 		// This happens when a pipe is passed in
-		let tmpValue = await context
+		let tmpValue = await value
 		for (let func of funcs) {
-			if (typeof func === 'function') {
-				const result = await func(tmpValue)
-				tmpValue = result !== undefined ? result : tmpValue
-			} else {
-				throw new Error(`pipe can only use functions. recieved: ${func}`)
-			}
+			const result = await func(tmpValue)
+			tmpValue = result !== undefined ? result : tmpValue
 		}
 		return tmpValue
 	}
 }
-
-const my = (...thing: Array<unknown>) => thing
-
-const value = my(1, 'two')
 
 export const invertedPipe = (value?: any) => {
 	return (...funcs: Function[]) => {
