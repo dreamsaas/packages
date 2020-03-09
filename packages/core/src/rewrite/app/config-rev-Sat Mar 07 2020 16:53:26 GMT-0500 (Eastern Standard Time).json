@@ -1,0 +1,41 @@
+{
+    "actions": {
+        "action 1": {
+            "name": "action 1"
+        },
+        "action 2": {
+            "name": "action 2"
+        }
+    },
+    "state": {},
+    "pipes": {
+        "pipe 1": {
+            "name": "pipe 1",
+            "actions": [
+                "action 1"
+            ]
+        },
+        "pipe 2": {
+            "name": "pipe 2",
+            "actions": [
+                "action 2"
+            ]
+        }
+    },
+    "events": {
+        "event 1": {
+            "name": "event 1",
+            "pipes": [
+                "pipe 1"
+            ]
+        },
+        "event 2": {
+            "name": "event 2",
+            "pipes": [
+                "pipe 2"
+            ]
+        }
+    },
+    "name": "my app",
+    "some": 0.4
+}

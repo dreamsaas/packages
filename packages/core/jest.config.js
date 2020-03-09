@@ -1,5 +1,6 @@
 module.exports = {
 	preset: 'ts-jest',
 	testEnvironment: 'node',
-	testRegex: '\\.spec\\.ts$'
+	testRegex: '\\.spec\\.ts$',
+	modulePathIgnorePatterns: ['rewrite/app']
 }

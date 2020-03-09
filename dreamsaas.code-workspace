@@ -20,12 +20,16 @@
     },
     {
       "path": "./packages/playground"
+    },
+    {
+      "path": "packages/plugin"
     }
   ],
   "settings": {
     "workbench.colorCustomizations": {},
     "jest.pathToJest": "npm test --",
     "editor.formatOnSave": true,
-    "typescript.tsdk": "core/node_modules/typescript/lib"
+    "typescript.tsdk": "core/node_modules/typescript/lib",
+    "debug.node.autoAttach": "on"
   }
 }
