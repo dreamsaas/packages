@@ -20,12 +20,14 @@
     "react-scripts": "3.4.0",
     "rewire": "^4.0.1",
     "tailwindcss": "^1.2.0",
+    "ts-node": "^8.6.2",
     "typescript": "~3.7.2"
   },
   "scripts": {
     "start": "yarn build:style && react-scripts start",
     "build": "yarn build:style && node ./scripts/build-non-split.js",
     "build:style": "tailwind build src/styles/index.css -o src/styles/tailwind.css",
+    "generate:tailwind:classlist": "ts-node --project=scripts/tsconfig.json scripts/extract-tailwind.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

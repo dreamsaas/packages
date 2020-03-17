@@ -74,7 +74,6 @@ function getHtmlForWebview(options) {
 
 		<body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
-      <h1>test</h1>
 			<div id="root"></div>
 			
       <script src="${scriptUri}"></script>

@@ -8,6 +8,7 @@ import path from 'path'
 import Fastify from 'fastify'
 import { triggerEvent } from './events'
 import fs from 'fs'
+import fastifyCors from 'fastify-cors'
 
 export enum DEV_API_EVENTS {
 	REQUEST_APP = 'REQUEST_APP',
@@ -74,6 +75,9 @@ export const installDevApi = (pathToAppDir: string) =>
 			pipes: [DEV_API_PIPES.START_DEV_API],
 			async run(props, context) {
 				const server = Fastify()
+				server.register(fastifyCors, {
+					origin: true
+				})
 
 				server.get('/api/app', async (request, reply) => {
 					console.log('entered route')
