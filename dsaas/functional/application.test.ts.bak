@@ -1,0 +1,95 @@
+import { ActionDef, addActions } from './action';
+import { createApplication } from './application';
+import { Flow, runFlow } from './flow';
+import { performance } from 'perf_hooks';
+
+const actionDef: ActionDef = {
+  id: '1',
+  run() {
+    return true;
+  }
+};
+
+describe('application', () => {
+  test('should register actions', async () => {
+    const app = await createApplication();
+    app.registerActions([actionDef]);
+    expect(app.registerActions).toBeDefined();
+    expect(app.context.actionDefs[0]).toBe(actionDef);
+  });
+
+  test('should add actions functionally', async () => {
+    const app = await createApplication();
+    addActions([actionDef])(app);
+    expect(app.context.actionDefs[0]).toBe(actionDef);
+  });
+
+  test('should apply config from init', async () => {
+    const app = await createApplication({ actionDefs: [actionDef], settings: { validate: true } });
+    expect(app.context.actionDefs[0]).toBe(actionDef);
+    expect(app.context.settings.validate).toBe(true);
+  });
+
+  test('should trigger APP_INITIALIZED', async () => {
+    const actionDefs = [
+      {
+        id: 'start',
+        run({ input }: any) {
+          return { output: input };
+        }
+      },
+      {
+        id: 'double',
+        run({ number }: any) {
+          return { number: number * 2 };
+        }
+      },
+      {
+        id: 'end',
+        run({ input }: any) {
+          return { output: input };
+        }
+      }
+    ];
+
+    const initFlow: Flow = {
+      id: 'init',
+      input: {},
+      output: {},
+      actions: [
+        {
+          id: 'start',
+          type: 'start'
+        },
+        {
+          id: 'double',
+          type: 'double'
+        },
+        { id: 'end', type: 'end' }
+      ],
+      onEvent: ['start'],
+      transitions: [
+        {
+          from: ['start', 'output'],
+          to: ['double', 'number']
+        },
+        {
+          from: ['double', 'number'],
+          to: ['end', 'input']
+        }
+      ]
+    };
+
+    const app = await createApplication({
+      actionDefs,
+      flows: [initFlow],
+      events: [{ id: 'start' }]
+    });
+    const t0 = performance.now();
+    for (let index = 0; index < 100000; index++) {
+      await runFlow('init', { input: 1 })(app);
+    }
+    const t1 = performance.now();
+    console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+  });
+});

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "build",
+    "module": "esnext",
+    "target": "ES2019",
+    "lib": ["es6", "dom", "esnext.intl", "es2017.intl", "es2018.intl", "es2019.array"],
+    "sourceMap": true,
+    "allowJs": false,
+    "declaration": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "rootDir": "src"
+  },
+  "include": [
+    "src",
+    "backup/node-definitions.ts",
+    "backup/runner.ts",
+    "backup/types.ts",
+    "backup/test.test.ts",
+    "backup/utils.ts",
+    "../../functional/experiment.test.ts"
+  ],
+  "exclude": ["node_modules"]
+}
