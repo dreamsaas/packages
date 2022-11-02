@@ -11,6 +11,9 @@ type IPropTypes =
 export interface IRegisteredComponent {
   name: string;
   component: FC<any>;
+  state?: {
+    [valueName: string]: IPropTypes;
+  };
   props: {
     [propName: string]: IPropTypes;
     children?: IRegisteredComponent[];
@@ -19,6 +22,9 @@ export interface IRegisteredComponent {
 
 export interface IComponentInstance {
   name: string;
+  state?: {
+    [valueName: string]: any;
+  };
   props: {
     [propName: string]: any;
     children?: IComponentInstance[];
